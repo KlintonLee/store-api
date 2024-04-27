@@ -1,31 +1,63 @@
 package com.klinton.store.domain.users.admin;
 
+import com.klinton.store.domain.exception.DomainException;
+import com.klinton.store.domain.validation.ThrowValidationHandler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AdminTest {
 
+    private final static String EXPECTED_NAME = "John Doe";
+
+    private final static String EXPECTED_EMAIL = "john.doe@fake_email.com";
+
+    private final static String EXPECT_PASSWORD = "123456";
+
+    private final static boolean EXPECTED_ACTIVE = true;
+
     @Test
-    public void givenValidParams_whenCallNewAdmin_thenShouldReturnAdmin() {
-        // Given
-        String name = "John Doe";
-        String email = "john.doe@fake_email.com";
-        String password = "123456";
-        boolean active = true;
+    public void givenValidParams_whenCallCreate_thenShouldReturnAdmin() {
+        // Act
+        final var admin = Admin.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
 
-        // When
-        final var admin = Admin.create(name, email, password, active);
-
-        // Then
+        // Assert
         assertNotNull(admin);
         assertNotNull(admin.getId());
-        assertEquals(name, admin.getName());
-        assertEquals(email, admin.getEmail());
-        assertEquals(password, admin.getPassword());
-        assertEquals(active, admin.isActive());
+        assertEquals(EXPECTED_NAME, admin.getName());
+        assertEquals(EXPECTED_EMAIL, admin.getEmail());
+        assertEquals(EXPECT_PASSWORD, admin.getPassword());
+        assertEquals(EXPECTED_ACTIVE, admin.isActive());
         assertNotNull(admin.getCreatedAt());
         assertNotNull(admin.getUpdatedAt());
         assertNull(admin.getDeletedAt());
+    }
+
+    @Test
+    public void givenNullName_whenCallNewAdmin_thenShouldThrowException() {
+        // Arrange
+        final String nullName = null;
+        final var expectedErrorMessage = "Name should not be null or empty";
+
+        // Act
+        final var admin = Admin.create(nullName, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var exception = assertThrows(DomainException.class, () -> admin.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenEmptyName_whenCallNewAdmin_thenShouldThrowException() {
+        // Arrange
+        final var nullName = " ";
+        final var expectedErrorMessage = "Name should not be null or empty";
+
+        // Act
+        final var admin = Admin.create(nullName, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var exception = assertThrows(DomainException.class, () -> admin.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }
