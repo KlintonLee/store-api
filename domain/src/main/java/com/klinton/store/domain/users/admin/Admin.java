@@ -50,7 +50,7 @@ public class Admin extends AggregateRoot<AdminID> {
 
     @Override
     public void validate(ValidationHandler handler) {
-
+        new AdminValidator(this, handler).validate();
     }
 
     public String getName() {
