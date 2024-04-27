@@ -8,24 +8,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductTest {
 
+    private final static String EXPECTED_NAME = "Product Name";
+
+    private final static String EXPECTED_DESCRIPTION = "Product Description";
+
+    private final static int EXPECTED_QUANTITY = 10;
+
+    private final static double EXPECTED_PRICE = 100.0;
+
     @Test
     public void givenValidParams_whenCallNewProduct_thenShouldReturnANewOne() {
-        // Arrange
-        final var name = "Product Name";
-        final var description = "Product Description";
-        final var quantity = 10;
-        final var price = 100.0;
-
         // Act
-        final var product = Product.with(name, description, quantity, price);
+        final var product = Product.with(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
 
         // Assert
         assertNotNull(product);
         assertNotNull(product.getId());
-        assertEquals(name, product.getName());
-        assertEquals(description, product.getDescription());
-        assertEquals(quantity, product.getQuantity());
-        assertEquals(price, product.getPrice());
+        assertEquals(EXPECTED_NAME, product.getName());
+        assertEquals(EXPECTED_DESCRIPTION, product.getDescription());
+        assertEquals(EXPECTED_QUANTITY, product.getQuantity());
+        assertEquals(EXPECTED_PRICE, product.getPrice());
         assertNotNull(product.getCreatedAt());
         assertNotNull(product.getUpdatedAt());
         assertNull(product.getDeletedAt());
@@ -34,13 +36,10 @@ public class ProductTest {
     @Test
     public void givenNullName_whenCallNewProduct_thenShouldThrownAnException() {
         // Arrange
-        final String name = null;
-        final var description = "Product Description";
-        final var quantity = 10;
-        final var price = 100.0;
+        final String nullName = null;
 
         // Act
-        final var product = Product.with(name, description, quantity, price);
+        final var product = Product.with(nullName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
@@ -50,13 +49,10 @@ public class ProductTest {
     @Test
     public void givenEmptyName_whenCallNewProduct_thenShouldThrownAnException() {
         // Arrange
-        final var name = " ";
-        final var description = "Product Description";
-        final var quantity = 10;
-        final var price = 100.0;
+        final var emptyName = " ";
 
         // Act
-        final var product = Product.with(name, description, quantity, price);
+        final var product = Product.with(emptyName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
@@ -66,13 +62,10 @@ public class ProductTest {
     @Test
     public void givenNegativePrice_whenCallNewProduct_thenShouldThrownAnException() {
         // Arrange
-        final var name = "Product Name";
-        final var description = "Product Description";
-        final var quantity = 10;
-        final var price = -100.0;
+        final var negativePrice = -100.0;
 
         // Act
-        final var product = Product.with(name, description, quantity, price);
+        final var product = Product.with(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, negativePrice);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
@@ -82,13 +75,10 @@ public class ProductTest {
     @Test
     public void givenNegativeQuantity_whenCallNewProduct_thenShouldThrownAnException() {
         // Arrange
-        final var name = "Product Name";
-        final var description = "Product Description";
-        final var quantity = -10;
-        final var price = 100.0;
+        final var negativeQuantity = -10;
 
         // Act
-        final var product = Product.with(name, description, quantity, price);
+        final var product = Product.with(EXPECTED_NAME, EXPECTED_DESCRIPTION, negativeQuantity, EXPECTED_PRICE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
