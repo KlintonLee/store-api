@@ -17,17 +17,30 @@ public class ProductValidator extends Validator {
 
     @Override
     public void validate() {
+        if (validateName()) return;
+        if (validatePrice()) return;
+        validateQuantity();
+    }
+
+    private boolean validateName() {
         final var name = product.getName();
+
         if (name == null || name.isBlank()) {
             validationHandler().append(new Error("Name should not be null or empty"));
-            return;
+            return true;
         }
+        return false;
+    }
 
+    private boolean validatePrice() {
         if (product.getPrice() < 0) {
             validationHandler().append(new Error("Price should be greater than zero"));
-            return;
+            return true;
         }
+        return false;
+    }
 
+    private void validateQuantity() {
         if (product.getQuantity() < 0) {
             validationHandler().append(new Error("Quantity should be greater than zero"));
         }
