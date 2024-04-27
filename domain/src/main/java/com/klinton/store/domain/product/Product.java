@@ -41,9 +41,10 @@ public class Product extends Entity<ProductID> {
         this.deletedAt = deletedAt;
     }
 
-    public static Product with(final String name, final String description, final int quantity, final double price) {
+    public static Product create(final String name, final String description, final int quantity, final double price) {
         final var id = ProductID.unique();
         final var now = Instant.now();
+
         return new Product(id, name, description, quantity, price, now, now, null);
     }
 

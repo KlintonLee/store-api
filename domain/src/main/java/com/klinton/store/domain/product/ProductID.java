@@ -14,14 +14,14 @@ public class ProductID extends Identifier {
     }
 
     public static ProductID unique() {
-        return ProductID.of(UUID.randomUUID());
+        return ProductID.from(UUID.randomUUID());
     }
 
-    public static ProductID of(final UUID value) {
-        return ProductID.of(value.toString());
+    public static ProductID from(final UUID value) {
+        return ProductID.from(value.toString());
     }
 
-    public static ProductID of(final String value) {
+    public static ProductID from(final String value) {
         return new ProductID(value);
     }
 

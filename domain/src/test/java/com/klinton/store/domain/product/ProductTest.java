@@ -17,9 +17,9 @@ public class ProductTest {
     private final static double EXPECTED_PRICE = 100.0;
 
     @Test
-    public void givenValidParams_whenCallNewProduct_thenShouldReturnANewOne() {
+    public void givenValidParams_whenCallCreate_thenShouldReturnANewOne() {
         // Act
-        final var product = Product.with(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
 
         // Assert
         assertNotNull(product);
@@ -34,54 +34,58 @@ public class ProductTest {
     }
 
     @Test
-    public void givenNullName_whenCallNewProduct_thenShouldThrownAnException() {
+    public void givenNullName_whenCallCreate_thenShouldThrownAnException() {
         // Arrange
         final String nullName = null;
+        final var expectedErrorMessage = "Name should not be null or empty";
 
         // Act
-        final var product = Product.with(nullName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var product = Product.create(nullName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
-        assertEquals("Name should not be null or empty", exception.getMessage());
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
     @Test
-    public void givenEmptyName_whenCallNewProduct_thenShouldThrownAnException() {
+    public void givenEmptyName_whenCallCreate_thenShouldThrownAnException() {
         // Arrange
         final var emptyName = " ";
+        final var expectedErrorMessage = "Name should not be null or empty";
 
         // Act
-        final var product = Product.with(emptyName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var product = Product.create(emptyName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
-        assertEquals("Name should not be null or empty", exception.getMessage());
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
     @Test
-    public void givenNegativePrice_whenCallNewProduct_thenShouldThrownAnException() {
+    public void givenNegativePrice_whenCallCreate_thenShouldThrownAnException() {
         // Arrange
         final var negativePrice = -100.0;
+        final var expectedErrorMessage = "Price should be greater than zero";
 
         // Act
-        final var product = Product.with(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, negativePrice);
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, negativePrice);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
-        assertEquals("Price should be greater than zero", exception.getMessage());
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
     @Test
-    public void givenNegativeQuantity_whenCallNewProduct_thenShouldThrownAnException() {
+    public void givenNegativeQuantity_whenCallCreate_thenShouldThrownAnException() {
         // Arrange
         final var negativeQuantity = -10;
+        final var expectedErrorMessage = "Quantity should be greater than zero";
 
         // Act
-        final var product = Product.with(EXPECTED_NAME, EXPECTED_DESCRIPTION, negativeQuantity, EXPECTED_PRICE);
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, negativeQuantity, EXPECTED_PRICE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
-        assertEquals("Quantity should be greater than zero", exception.getMessage());
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }
