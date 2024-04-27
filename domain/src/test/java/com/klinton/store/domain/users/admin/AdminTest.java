@@ -34,6 +34,19 @@ public class AdminTest {
     }
 
     @Test
+    public void givenAnInactiveAdmin_whenCallCreate_thenShouldReturnInactiveAdmin() {
+        // Arrange
+        final var expectedActive = false;
+
+        // Act
+        final var admin = Admin.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, expectedActive);
+
+        // Assert
+        assertFalse(admin.isActive());
+        assertNotNull(admin.getDeletedAt());
+    }
+
+    @Test
     public void givenNullName_whenCallNewAdmin_thenShouldThrowException() {
         // Arrange
         final String nullName = null;
