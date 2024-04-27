@@ -62,4 +62,20 @@ public class ProductTest {
         // Assert
         assertEquals("Name should not be null or empty", exception.getMessage());
     }
+
+    @Test
+    public void givenNegativePrice_whenCallNewProduct_thenShouldThrownAnException() {
+        // Arrange
+        final var name = "Product Name";
+        final var description = "Product Description";
+        final var quantity = 10;
+        final var price = -100.0;
+
+        // Act
+        final var product = Product.with(name, description, quantity, price);
+        final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals("Price should be greater than zero", exception.getMessage());
+    }
 }
