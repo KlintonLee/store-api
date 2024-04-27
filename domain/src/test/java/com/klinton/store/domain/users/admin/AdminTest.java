@@ -60,4 +60,32 @@ public class AdminTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenNullEmail_whenCallNewAdmin_thenShouldThrowException() {
+        // Arrange
+        final String nullEmail = null;
+        final var expectedErrorMessage = "Email should not be null or empty";
+
+        // Act
+        final var admin = Admin.create(EXPECTED_NAME, nullEmail, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var exception = assertThrows(DomainException.class, () -> admin.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenEmptyEmail_whenCallNewAdmin_thenShouldThrowException() {
+        // Arrange
+        final String emptyEmail = " ";
+        final var expectedErrorMessage = "Email should not be null or empty";
+
+        // Act
+        final var admin = Admin.create(EXPECTED_NAME, emptyEmail, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var exception = assertThrows(DomainException.class, () -> admin.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
