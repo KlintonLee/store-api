@@ -25,6 +25,11 @@ public class ProductValidator extends Validator {
 
         if (product.getPrice() < 0) {
             validationHandler().append(new Error("Price should be greater than zero"));
+            return;
+        }
+
+        if (product.getQuantity() < 0) {
+            validationHandler().append(new Error("Quantity should be greater than zero"));
         }
     }
 }
