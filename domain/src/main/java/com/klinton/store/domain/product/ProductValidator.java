@@ -20,6 +20,11 @@ public class ProductValidator extends Validator {
         final var name = product.getName();
         if (name == null || name.isBlank()) {
             validationHandler().append(new Error("Name should not be null or empty"));
+            return;
+        }
+
+        if (product.getPrice() < 0) {
+            validationHandler().append(new Error("Price should be greater than zero"));
         }
     }
 }
