@@ -44,8 +44,9 @@ public class Admin extends AggregateRoot<AdminID> {
     public static Admin create(final String name, final String email, final String password, final boolean active) {
         final var id = AdminID.unique();
         final var now = Instant.now();
+        final var deletedAt = active ? null : now;
 
-        return new Admin(id, name, email, password, active, now, now, null);
+        return new Admin(id, name, email, password, active, now, now, deletedAt);
     }
 
     @Override
