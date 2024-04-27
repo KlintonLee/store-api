@@ -1,6 +1,7 @@
 package com.klinton.store.domain.product;
 
 import com.klinton.store.domain.Entity;
+import com.klinton.store.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 
@@ -72,5 +73,10 @@ public class Product extends Entity<ProductID> {
 
     public Instant getDeletedAt() {
         return deletedAt;
+    }
+
+    @Override
+    public void validate(ValidationHandler handler) {
+        new ProductValidator(this, handler).validate();
     }
 }
