@@ -101,4 +101,31 @@ public class AdminTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenValidParams_whenCallUpdate_thenShouldReturnUpdatedAdmin() throws InterruptedException {
+        // Arrange
+        final var updatedName = "Jane Doe";
+        final var updatedEmail = "jane.doe@fake_email.com";
+        final var updatedPassword = "654321";
+        final var updatedActive = false;
+        final var admin = Admin.create(updatedName, updatedEmail, updatedPassword, updatedActive);
+        final var createdAt = admin.getCreatedAt();
+        final var updatedAt = admin.getUpdatedAt();
+
+        // Act
+        Thread.sleep(1);
+        admin.update(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+
+        // Assert
+        assertNotNull(admin);
+        assertNotNull(admin.getId());
+        assertEquals(EXPECTED_NAME, admin.getName());
+        assertEquals(EXPECTED_EMAIL, admin.getEmail());
+        assertEquals(EXPECT_PASSWORD, admin.getPassword());
+        assertEquals(EXPECTED_ACTIVE, admin.isActive());
+        assertEquals(createdAt, admin.getCreatedAt());
+        assertTrue(admin.getUpdatedAt().isAfter(updatedAt));
+        assertNull(admin.getDeletedAt());
+    }
 }
