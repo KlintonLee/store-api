@@ -54,6 +54,15 @@ public class Admin extends AggregateRoot<AdminID> {
         new AdminValidator(this, handler).validate();
     }
 
+    public void update(final String name, final String email, final String password, final boolean active) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.active = active;
+        this.updatedAt = Instant.now();
+        this.deletedAt = active ? null : this.deletedAt;
+    }
+
     public String getName() {
         return name;
     }
