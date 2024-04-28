@@ -112,4 +112,33 @@ public class ProductTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenValidParams_whenCallUpdate_thenShouldReturnUpdatedProduct() throws InterruptedException {
+        // Arrange
+        final var expectedName = "New Product Name";
+        final var expectedDescription = "New Product Description";
+        final var expectedQuantity = 20;
+        final var expectedPrice = 200.0;
+        final var expectedActive = false;
+        final var product = Product.create(expectedName, expectedDescription, expectedQuantity, expectedPrice, expectedActive);
+        final var createdAt = product.getCreatedAt();
+        final var updatedAt = product.getUpdatedAt();
+
+        // Act
+        Thread.sleep(1);
+        product.update(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, EXPECTED_ACTIVE);
+
+        // Assert
+        assertNotNull(product);
+        assertNotNull(product.getId());
+        assertEquals(EXPECTED_NAME, product.getName());
+        assertEquals(EXPECTED_DESCRIPTION, product.getDescription());
+        assertEquals(EXPECTED_QUANTITY, product.getQuantity());
+        assertEquals(EXPECTED_PRICE, product.getPrice());
+        assertEquals(EXPECTED_ACTIVE, product.isActive());
+        assertEquals(createdAt, product.getCreatedAt());
+        assertTrue(product.getUpdatedAt().isAfter(updatedAt));
+        assertNull(product.getDeletedAt());
+    }
 }
