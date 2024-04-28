@@ -15,6 +15,8 @@ public class Product extends Entity<ProductID> {
 
     private double price;
 
+    private boolean active;
+
     private final Instant createdAt;
 
     private Instant updatedAt;
@@ -27,6 +29,7 @@ public class Product extends Entity<ProductID> {
             String description,
             int quantity,
             double price,
+            boolean active,
             Instant createdAt,
             Instant updatedAt,
             Instant deletedAt
@@ -36,16 +39,24 @@ public class Product extends Entity<ProductID> {
         this.description = description;
         this.quantity = quantity;
         this.price = price;
+        this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
     }
 
-    public static Product create(final String name, final String description, final int quantity, final double price) {
+    public static Product create(
+            final String name,
+            final String description,
+            final int quantity,
+            final double price,
+            final boolean active
+    ) {
         final var id = ProductID.unique();
         final var now = Instant.now();
+        final var deletedAt = active ? null : now;
 
-        return new Product(id, name, description, quantity, price, now, now, null);
+        return new Product(id, name, description, quantity, price, active, now, now, deletedAt);
     }
 
     public String getName() {
@@ -62,6 +73,10 @@ public class Product extends Entity<ProductID> {
 
     public double getPrice() {
         return price;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public Instant getCreatedAt() {
