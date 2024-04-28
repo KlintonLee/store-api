@@ -59,6 +59,22 @@ public class Product extends Entity<ProductID> {
         return new Product(id, name, description, quantity, price, active, now, now, deletedAt);
     }
 
+    public void update(
+            final String name,
+            final String description,
+            final int quantity,
+            final double price,
+            final boolean active
+    ) {
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+        this.active = active;
+        this.updatedAt = Instant.now();
+        this.deletedAt = active ? null : Instant.now();
+    }
+
     public String getName() {
         return name;
     }
