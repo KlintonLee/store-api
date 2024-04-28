@@ -16,10 +16,12 @@ public class ProductTest {
 
     private final static double EXPECTED_PRICE = 100.0;
 
+    private final static boolean EXPECTED_ACTIVE = true;
+
     @Test
     public void givenValidParams_whenCallCreate_thenShouldReturnANewOne() {
         // Act
-        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, EXPECTED_ACTIVE);
 
         // Assert
         assertNotNull(product);
@@ -28,9 +30,31 @@ public class ProductTest {
         assertEquals(EXPECTED_DESCRIPTION, product.getDescription());
         assertEquals(EXPECTED_QUANTITY, product.getQuantity());
         assertEquals(EXPECTED_PRICE, product.getPrice());
+        assertEquals(EXPECTED_ACTIVE, product.isActive());
         assertNotNull(product.getCreatedAt());
         assertNotNull(product.getUpdatedAt());
         assertNull(product.getDeletedAt());
+    }
+
+    @Test
+    public void givenAnInactiveProduct_whenCallCreate_thenShouldReturnInactiveProduct() {
+        // Arrange
+        final var expectedActive = false;
+
+        // Act
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, expectedActive);
+
+        // Assert
+        assertNotNull(product);
+        assertNotNull(product.getId());
+        assertEquals(EXPECTED_NAME, product.getName());
+        assertEquals(EXPECTED_DESCRIPTION, product.getDescription());
+        assertEquals(EXPECTED_QUANTITY, product.getQuantity());
+        assertEquals(EXPECTED_PRICE, product.getPrice());
+        assertEquals(expectedActive, product.isActive());
+        assertNotNull(product.getCreatedAt());
+        assertNotNull(product.getUpdatedAt());
+        assertNotNull(product.getDeletedAt());
     }
 
     @Test
@@ -40,7 +64,7 @@ public class ProductTest {
         final var expectedErrorMessage = "Name should not be null or empty";
 
         // Act
-        final var product = Product.create(nullName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var product = Product.create(nullName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, EXPECTED_ACTIVE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
@@ -54,7 +78,7 @@ public class ProductTest {
         final var expectedErrorMessage = "Name should not be null or empty";
 
         // Act
-        final var product = Product.create(emptyName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var product = Product.create(emptyName, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, EXPECTED_ACTIVE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
@@ -68,7 +92,7 @@ public class ProductTest {
         final var expectedErrorMessage = "Price should be greater than zero";
 
         // Act
-        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, negativePrice);
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, negativePrice, EXPECTED_ACTIVE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
@@ -82,7 +106,7 @@ public class ProductTest {
         final var expectedErrorMessage = "Quantity should be greater than zero";
 
         // Act
-        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, negativeQuantity, EXPECTED_PRICE);
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, negativeQuantity, EXPECTED_PRICE, EXPECTED_ACTIVE);
         final var exception = assertThrows(DomainException.class, () -> product.validate(new ThrowValidationHandler()));
 
         // Assert
