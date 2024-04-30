@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  database:
+    image: 'postgres:latest'
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_DB: 'store'
+    networks:
+      - my_app
+
+networks:
+    my_app:
