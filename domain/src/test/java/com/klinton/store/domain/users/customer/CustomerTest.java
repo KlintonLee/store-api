@@ -61,4 +61,32 @@ public class CustomerTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenNullEmail_whenCallingCreate_thenShouldThrowException() {
+        // Arrange
+        String nullEmail = null;
+        var expectedErrorMessage = "Email should not be null or empty";
+
+        // Act
+        var customer = Customer.create(NAME, nullEmail, PASSWORD, PHONE);
+        var exception = assertThrows(DomainException.class, () -> customer.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenEmptyEmail_whenCallingCreate_thenShouldThrowException() {
+        // Arrange
+        String emptyEmail = " ";
+        var expectedErrorMessage = "Email should not be null or empty";
+
+        // Act
+        var customer = Customer.create(NAME, emptyEmail, PASSWORD, PHONE);
+        var exception = assertThrows(DomainException.class, () -> customer.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
