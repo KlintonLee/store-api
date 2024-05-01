@@ -57,6 +57,22 @@ public class Customer extends AggregateRoot<CustomerID> {
         new CustomerValidator(handler, this).validate();
     }
 
+    public void deactivate() {
+        var now = Instant.now();
+        this.updatedAt = now;
+        if (this.deletedAt == null) {
+            this.deletedAt = now;
+        }
+
+        this.active = false;
+    }
+
+    public void activate() {
+        this.updatedAt = Instant.now();;
+        this.deletedAt = null;
+        this.active = true;
+    }
+
     public void update(String name, String email, String password, String phone, boolean active) {
         this.name = name;
         this.email = email;
