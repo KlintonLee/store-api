@@ -78,7 +78,11 @@ public class Customer extends AggregateRoot<CustomerID> {
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.active = active;
+        if (active) {
+            activate();
+        } else {
+            deactivate();
+        }
         this.updatedAt = Instant.now();
     }
 

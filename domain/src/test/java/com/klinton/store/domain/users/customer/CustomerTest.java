@@ -101,7 +101,7 @@ public class CustomerTest {
 
         // Act
         Thread.sleep(1);
-        customer.update(NAME, EMAIL, PASSWORD, PHONE, ACTIVE);
+        customer.update(NAME, EMAIL, PASSWORD, PHONE, false);
 
         // Assert
         assertNotNull(customer);
@@ -110,10 +110,10 @@ public class CustomerTest {
         assertEquals(EMAIL, customer.getEmail());
         assertEquals(PASSWORD, customer.getPassword());
         assertEquals(PHONE, customer.getPhone());
-        assertTrue(customer.isActive());
+        assertFalse(customer.isActive());
         assertEquals(createdAt, customer.getCreatedAt());
         assertTrue(updatedAt.isBefore(customer.getUpdatedAt()));
-        assertNull(customer.getDeletedAt());
+        assertNotNull(customer.getDeletedAt());
     }
 
     @Test
