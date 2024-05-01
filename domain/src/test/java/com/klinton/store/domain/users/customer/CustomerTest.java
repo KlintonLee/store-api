@@ -16,6 +16,8 @@ public class CustomerTest {
 
     private final static String PHONE = "1234567890";
 
+    private final static boolean ACTIVE = true;
+
     @Test
     public void givenAValidParams_whenCallingCreate_thenShouldReturnACustomer() {
         // Act
@@ -88,5 +90,28 @@ public class CustomerTest {
 
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenValidParams_whenCallingUpdate_thenShouldUpdateCustomer() {
+        // Arrange
+        var customer = Customer.create("Mary Doe", "marydoe@email.com", "old_passwod", "123");
+        var createdAt = customer.getCreatedAt();
+        var updatedAt = customer.getUpdatedAt();
+
+        // Act
+        customer.update(NAME, EMAIL, PASSWORD, PHONE, ACTIVE);
+
+        // Assert
+        assertNotNull(customer);
+        assertNotNull(customer.getId());
+        assertEquals(NAME, customer.getName());
+        assertEquals(EMAIL, customer.getEmail());
+        assertEquals(PASSWORD, customer.getPassword());
+        assertEquals(PHONE, customer.getPhone());
+        assertTrue(customer.isActive());
+        assertEquals(createdAt, customer.getCreatedAt());
+        assertTrue(updatedAt.isBefore(customer.getUpdatedAt()));
+        assertNull(customer.getDeletedAt());
     }
 }
