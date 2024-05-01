@@ -93,14 +93,65 @@ public class CustomerTest {
     }
 
     @Test
-    public void givenValidParams_whenCallingUpdate_thenShouldUpdateCustomer() {
+    public void givenValidParams_whenCallingUpdate_thenShouldUpdateCustomer() throws InterruptedException {
         // Arrange
         var customer = Customer.create("Mary Doe", "marydoe@email.com", "old_passwod", "123");
         var createdAt = customer.getCreatedAt();
         var updatedAt = customer.getUpdatedAt();
 
         // Act
+        Thread.sleep(1);
         customer.update(NAME, EMAIL, PASSWORD, PHONE, ACTIVE);
+
+        // Assert
+        assertNotNull(customer);
+        assertNotNull(customer.getId());
+        assertEquals(NAME, customer.getName());
+        assertEquals(EMAIL, customer.getEmail());
+        assertEquals(PASSWORD, customer.getPassword());
+        assertEquals(PHONE, customer.getPhone());
+        assertTrue(customer.isActive());
+        assertEquals(createdAt, customer.getCreatedAt());
+        assertTrue(updatedAt.isBefore(customer.getUpdatedAt()));
+        assertNull(customer.getDeletedAt());
+    }
+
+    @Test
+    public void givenAnActiveCustomer_whenCallingDeactivate_thenShouldDeactivateCustomer() throws InterruptedException {
+        // Arrange
+        var customer = Customer.create(NAME, EMAIL, PASSWORD, PHONE);
+        var createdAt = customer.getCreatedAt();
+        var updatedAt = customer.getUpdatedAt();
+
+        // Act
+        Thread.sleep(1);
+        customer.deactivate();
+
+        // Assert
+        assertNotNull(customer);
+        assertNotNull(customer.getId());
+        assertEquals(NAME, customer.getName());
+        assertEquals(EMAIL, customer.getEmail());
+        assertEquals(PASSWORD, customer.getPassword());
+        assertEquals(PHONE, customer.getPhone());
+        assertFalse(customer.isActive());
+        assertEquals(createdAt, customer.getCreatedAt());
+        assertTrue(updatedAt.isBefore(customer.getUpdatedAt()));
+        assertNotNull(customer.getDeletedAt());
+    }
+
+    @Test
+    public void givenADeactivateCustomer_whenCallingActivate_thenShouldActivateCustomer() throws InterruptedException {
+        // Arrange
+        var customer = Customer.create(NAME, EMAIL, PASSWORD, PHONE);
+        var createdAt = customer.getCreatedAt();
+        var updatedAt = customer.getUpdatedAt();
+        Thread.sleep(1);
+        customer.deactivate();
+        assertFalse(customer.isActive());
+
+        // Act
+        customer.activate();
 
         // Assert
         assertNotNull(customer);
