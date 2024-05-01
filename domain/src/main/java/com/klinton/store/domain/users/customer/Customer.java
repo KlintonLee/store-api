@@ -54,7 +54,7 @@ public class Customer extends AggregateRoot<CustomerID> {
 
     @Override
     public void validate(ValidationHandler handler) {
-
+        new CustomerValidator(handler, this).validate();
     }
 
     public String getName() {
