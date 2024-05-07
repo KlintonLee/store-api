@@ -1,4 +1,4 @@
-package com.klinton.store.domain.users.admin;
+package com.klinton.store.domain.aggregate.admin;
 
 import com.klinton.store.domain.Identifier;
 

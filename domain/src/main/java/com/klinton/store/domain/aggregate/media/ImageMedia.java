@@ -1,4 +1,4 @@
-package com.klinton.store.domain.media;
+package com.klinton.store.domain.aggregate.media;
 
 import com.klinton.store.domain.ValueObject;
 

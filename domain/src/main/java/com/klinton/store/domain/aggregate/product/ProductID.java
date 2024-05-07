@@ -1,4 +1,4 @@
-package com.klinton.store.domain.product;
+package com.klinton.store.domain.aggregate.product;
 
 import com.klinton.store.domain.Identifier;
 

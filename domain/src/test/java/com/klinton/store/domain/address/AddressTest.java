@@ -1,5 +1,7 @@
 package com.klinton.store.domain.address;
 
+import com.klinton.store.domain.aggregate.address.Address;
+import com.klinton.store.domain.aggregate.address.States;
 import com.klinton.store.domain.exception.DomainException;
 import com.klinton.store.domain.validation.ThrowValidationHandler;
 import org.junit.jupiter.api.Test;

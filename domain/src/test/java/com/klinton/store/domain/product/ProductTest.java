@@ -1,5 +1,6 @@
 package com.klinton.store.domain.product;
 
+import com.klinton.store.domain.aggregate.product.Product;
 import com.klinton.store.domain.exception.DomainException;
 import com.klinton.store.domain.validation.ThrowValidationHandler;
 import org.junit.jupiter.api.Test;
