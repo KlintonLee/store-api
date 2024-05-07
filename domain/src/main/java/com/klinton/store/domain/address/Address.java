@@ -9,7 +9,7 @@ public class Address extends AggregateRoot<AddressId> {
 
     private String city;
 
-    private String state;
+    private States state;
 
     private String number;
 
@@ -19,7 +19,7 @@ public class Address extends AggregateRoot<AddressId> {
             final AddressId addressId,
             final String street,
             final String city,
-            final String state,
+            final States state,
             final String number,
             final String zipCode
     ) {
@@ -34,7 +34,7 @@ public class Address extends AggregateRoot<AddressId> {
     public static Address create(
             final String street,
             final String city,
-            final String state,
+            final States state,
             final String number,
             final String zipCode
     ) {
@@ -55,7 +55,7 @@ public class Address extends AggregateRoot<AddressId> {
         return city;
     }
 
-    public String getState() {
+    public States getState() {
         return state;
     }
 

@@ -10,7 +10,7 @@ public class AddressTest {
 
     private static final String STREET = "Rua dos bobos";
     private static final String CITY = "São Paulo";
-    private static final String STATE = "SP";
+    private static final States STATE = States.SP;
     private static final String NUMBER = "0";
     private static final String ZIPCODE = "00000-000";
 
