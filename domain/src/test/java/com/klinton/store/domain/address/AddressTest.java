@@ -1,9 +1,10 @@
 package com.klinton.store.domain.address;
 
+import com.klinton.store.domain.exception.DomainException;
+import com.klinton.store.domain.validation.ThrowValidationHandler;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AddressTest {
 
@@ -16,7 +17,7 @@ public class AddressTest {
     @Test
     public void givenValidParams_whenCallAddressCreate_thenShouldReturnAddressInstance() {
         // When
-        var address = Address.create(STREET, CITY, STATE, NUMBER, ZIPCODE);
+        final var address = Address.create(STREET, CITY, STATE, NUMBER, ZIPCODE);
 
         // Then
         assertNotNull(address);
@@ -26,5 +27,32 @@ public class AddressTest {
         assertEquals(STATE, address.getState());
         assertEquals(NUMBER, address.getNumber());
         assertEquals(ZIPCODE, address.getZipCode());
+    }
+
+    @Test
+    public void givenNullStreet_whenCallAddressValidate_thenShouldThrowDomainException() {
+        // Arrange
+        final var address = Address.create(null, CITY, STATE, NUMBER, ZIPCODE);
+        final var expectedErrorMessage = "Street name should not be null or empty";
+
+        // Act
+        final var exception = assertThrows(DomainException.class, () -> address.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenEmptyStreet_whenCallAddressValidate_thenShouldThrownDomainException() {
+        // Arrange
+        final var emptyStreet = " ";
+        final var address = Address.create(emptyStreet, CITY, STATE, NUMBER, ZIPCODE);
+        final var expectedErrorMessage = "Street name should not be null or empty";
+
+        // Act
+        final var exception = assertThrows(DomainException.class, () -> address.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }

@@ -44,7 +44,7 @@ public class Address extends AggregateRoot<AddressId> {
 
     @Override
     public void validate(ValidationHandler handler) {
-
+        new AddressValidator(this, handler).validate();
     }
 
     public String getStreet() {
