@@ -12,6 +12,7 @@ public class AddressTest {
 
     private static final String STREET = "Rua dos bobos";
     private static final String CITY = "São Paulo";
+    private static final String NEIGHBORHOOD = "Vila do Chaves";
     private static final States STATE = States.SP;
     private static final String NUMBER = "0";
     private static final String ZIPCODE = "00000-000";
@@ -19,13 +20,14 @@ public class AddressTest {
     @Test
     public void givenValidParams_whenCallAddressCreate_thenShouldReturnAddressInstance() {
         // When
-        final var address = Address.create(STREET, CITY, STATE, NUMBER, ZIPCODE);
+        final var address = Address.create(STREET, CITY, NEIGHBORHOOD, STATE, NUMBER, ZIPCODE);
 
         // Then
         assertNotNull(address);
         assertNotNull(address.getId());
         assertEquals(STREET, address.getStreet());
         assertEquals(CITY, address.getCity());
+        assertEquals(NEIGHBORHOOD, address.getNeighborhood());
         assertEquals(STATE, address.getState());
         assertEquals(NUMBER, address.getNumber());
         assertEquals(ZIPCODE, address.getZipCode());
@@ -34,7 +36,7 @@ public class AddressTest {
     @Test
     public void givenNullStreet_whenCallAddressValidate_thenShouldThrowDomainException() {
         // Arrange
-        final var address = Address.create(null, CITY, STATE, NUMBER, ZIPCODE);
+        final var address = Address.create(null, CITY, NEIGHBORHOOD, STATE, NUMBER, ZIPCODE);
         final var expectedErrorMessage = "Street name should not be null or empty";
 
         // Act
@@ -48,7 +50,7 @@ public class AddressTest {
     public void givenEmptyStreet_whenCallAddressValidate_thenShouldThrownDomainException() {
         // Arrange
         final var emptyStreet = " ";
-        final var address = Address.create(emptyStreet, CITY, STATE, NUMBER, ZIPCODE);
+        final var address = Address.create(emptyStreet, CITY, NEIGHBORHOOD, STATE, NUMBER, ZIPCODE);
         final var expectedErrorMessage = "Street name should not be null or empty";
 
         // Act
@@ -61,7 +63,7 @@ public class AddressTest {
     @Test
     public void givenNullCity_whenCallAddressValidate_thenShouldThrowDomainException() {
         // Arrange
-        final var address = Address.create(STREET, null, STATE, NUMBER, ZIPCODE);
+        final var address = Address.create(STREET, null, NEIGHBORHOOD, STATE, NUMBER, ZIPCODE);
         final var expectedErrorMessage = "City name should not be null or empty";
 
         // Act
@@ -75,7 +77,7 @@ public class AddressTest {
     public void givenEmptyCity_whenCallAddressValidate_thenShouldThrownDomainException() {
         // Arrange
         final var emptyCity = " ";
-        final var address = Address.create(STREET, emptyCity, STATE, NUMBER, ZIPCODE);
+        final var address = Address.create(STREET, emptyCity, NEIGHBORHOOD, STATE, NUMBER, ZIPCODE);
         final var expectedErrorMessage = "City name should not be null or empty";
 
         // Act
@@ -88,7 +90,7 @@ public class AddressTest {
     @Test
     public void givenNullState_whenCallAddressValidate_thenShouldThrowDomainException() {
         // Arrange
-        final var address = Address.create(STREET, CITY, null, NUMBER, ZIPCODE);
+        final var address = Address.create(STREET, CITY, NEIGHBORHOOD, null, NUMBER, ZIPCODE);
         final var expectedErrorMessage = "Brazilian state should should not be null";
 
         // Act
@@ -101,7 +103,7 @@ public class AddressTest {
     @Test
     public void givenNullNumber_whenCallAddressValidate_thenShouldThrowDomainException() {
         // Arrange
-        final var address = Address.create(STREET, CITY, STATE, null, ZIPCODE);
+        final var address = Address.create(STREET, CITY, NEIGHBORHOOD, STATE, null, ZIPCODE);
         final var expectedErrorMessage = "Address number should not be null or empty";
 
         // Act
@@ -115,7 +117,7 @@ public class AddressTest {
     public void givenEmptyNumber_whenCallAddressValidate_thenShouldThrowDomainException() {
         // Arrange
         final var emptyNumber = " ";
-        final var address = Address.create(STREET, CITY, STATE, emptyNumber, ZIPCODE);
+        final var address = Address.create(STREET, CITY, NEIGHBORHOOD, STATE, emptyNumber, ZIPCODE);
         final var expectedErrorMessage = "Address number should not be null or empty";
 
         // Act
@@ -128,7 +130,7 @@ public class AddressTest {
     @Test
     public void givenNullZipCode_whenCallAddressValidate_thenShouldThrowDomainException() {
         // Arrange
-        final var address = Address.create(STREET, CITY, STATE, NUMBER, null);
+        final var address = Address.create(STREET, CITY, NEIGHBORHOOD, STATE, NUMBER, null);
         final var expectedErrorMessage = "Zip code should not be null or empty";
 
         // Act
@@ -142,7 +144,7 @@ public class AddressTest {
     public void givenEmptyZipCode_whenCallAddressValidate_thenShouldThrowDomainException() {
         // Arrange
         final var emptyZipCode = " ";
-        final var address = Address.create(STREET, CITY, STATE, NUMBER, emptyZipCode);
+        final var address = Address.create(STREET, CITY, NEIGHBORHOOD, STATE, NUMBER, emptyZipCode);
         final var expectedErrorMessage = "Zip code should not be null or empty";
 
         // Act
@@ -158,19 +160,21 @@ public class AddressTest {
         final var address = Address.create(
                 "Rua abcd",
                 "Rio de Janeiro",
+                "Copacabana",
                 States.RJ,
                 "s/n",
                 "11111-111"
         );
 
         // Act
-        address.update(STREET, CITY, STATE, NUMBER, ZIPCODE);
+        address.update(STREET, CITY, NEIGHBORHOOD, STATE, NUMBER, ZIPCODE);
 
         // Assert
         assertNotNull(address);
         assertNotNull(address.getId());
         assertEquals(STREET, address.getStreet());
         assertEquals(CITY, address.getCity());
+        assertEquals(NEIGHBORHOOD, address.getNeighborhood());
         assertEquals(STATE, address.getState());
         assertEquals(NUMBER, address.getNumber());
         assertEquals(ZIPCODE, address.getZipCode());

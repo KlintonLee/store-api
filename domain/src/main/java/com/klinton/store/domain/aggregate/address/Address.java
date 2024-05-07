@@ -9,6 +9,8 @@ public class Address extends AggregateRoot<AddressId> {
 
     private String city;
 
+    private String neighborhood;
+
     private States state;
 
     private String number;
@@ -19,6 +21,7 @@ public class Address extends AggregateRoot<AddressId> {
             final AddressId addressId,
             final String street,
             final String city,
+            final String neighborhood,
             final States state,
             final String number,
             final String zipCode
@@ -26,6 +29,7 @@ public class Address extends AggregateRoot<AddressId> {
         super(addressId);
         this.street = street;
         this.city = city;
+        this.neighborhood = neighborhood;
         this.state = state;
         this.number = number;
         this.zipCode = zipCode;
@@ -34,12 +38,13 @@ public class Address extends AggregateRoot<AddressId> {
     public static Address create(
             final String street,
             final String city,
+            final String neighborhood,
             final States state,
             final String number,
             final String zipCode
     ) {
         var addressId = AddressId.unique();
-        return new Address(addressId, street, city, state, number, zipCode);
+        return new Address(addressId, street, city, neighborhood, state, number, zipCode);
     }
 
     @Override
@@ -50,12 +55,14 @@ public class Address extends AggregateRoot<AddressId> {
     public Address update(
             final String street,
             final String city,
+            final String neighborhood,
             final States state,
             final String number,
             final String zipCode
     ) {
         this.street = street;
         this.city = city;
+        this.neighborhood = neighborhood;
         this.state = state;
         this.number = number;
         this.zipCode = zipCode;
@@ -68,6 +75,10 @@ public class Address extends AggregateRoot<AddressId> {
 
     public String getCity() {
         return city;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
     }
 
     public States getState() {
