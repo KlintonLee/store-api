@@ -31,5 +31,10 @@ public class AddressValidator extends Validator {
         if (state == null) {
             validationHandler().append(new Error("Brazilian state should should not be null"));
         }
+
+        final var number = address.getNumber();
+        if (number == null || number.isBlank()) {
+            validationHandler().append(new Error("Address number should not be null or empty"));
+        }
     }
 }
