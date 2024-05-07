@@ -47,6 +47,21 @@ public class Address extends AggregateRoot<AddressId> {
         new AddressValidator(this, handler).validate();
     }
 
+    public Address update(
+            final String street,
+            final String city,
+            final States state,
+            final String number,
+            final String zipCode
+    ) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.number = number;
+        this.zipCode = zipCode;
+        return this;
+    }
+
     public String getStreet() {
         return street;
     }
