@@ -21,5 +21,10 @@ public class AddressValidator extends Validator {
         if (street == null || street.isBlank()) {
             validationHandler().append(new Error("Street name should not be null or empty"));
         }
+
+        final var city = address.getCity();
+        if (city == null || city.isBlank()) {
+            validationHandler().append(new Error("City name should not be null or empty"));
+        }
     }
 }
