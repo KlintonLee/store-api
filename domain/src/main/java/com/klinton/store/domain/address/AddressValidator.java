@@ -36,5 +36,10 @@ public class AddressValidator extends Validator {
         if (number == null || number.isBlank()) {
             validationHandler().append(new Error("Address number should not be null or empty"));
         }
+
+        final var zipCode = address.getZipCode();
+        if (zipCode == null || zipCode.isBlank()) {
+            validationHandler().append(new Error("Zip code should not be null or empty"));
+        }
     }
 }
