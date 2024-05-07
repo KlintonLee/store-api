@@ -26,5 +26,10 @@ public class AddressValidator extends Validator {
         if (city == null || city.isBlank()) {
             validationHandler().append(new Error("City name should not be null or empty"));
         }
+
+        final var state = address.getState();
+        if (state == null) {
+            validationHandler().append(new Error("Brazilian state should should not be null"));
+        }
     }
 }
