@@ -95,4 +95,30 @@ public class AddressTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenNullNumber_whenCallAddressValidate_thenShouldThrowDomainException() {
+        // Arrange
+        final var address = Address.create(STREET, CITY, STATE, null, ZIPCODE);
+        final var expectedErrorMessage = "Address number should not be null or empty";
+
+        // Act
+        final var exception = assertThrows(DomainException.class, () -> address.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenEmptyNumber_whenCallAddressValidate_thenShouldThrowDomainException() {
+        // Arrange
+        final var address = Address.create(STREET, CITY, STATE, null, ZIPCODE);
+        final var expectedErrorMessage = "Address number should not be null or empty";
+
+        // Act
+        final var exception = assertThrows(DomainException.class, () -> address.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
