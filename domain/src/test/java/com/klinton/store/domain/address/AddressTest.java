@@ -82,4 +82,17 @@ public class AddressTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenNullState_whenCallAddressValidate_thenShouldThrowDomainException() {
+        // Arrange
+        final var address = Address.create(STREET, CITY, null, NUMBER, ZIPCODE);
+        final var expectedErrorMessage = "Brazilian state should should not be null";
+
+        // Act
+        final var exception = assertThrows(DomainException.class, () -> address.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
