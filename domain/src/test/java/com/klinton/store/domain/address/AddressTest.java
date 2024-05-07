@@ -149,4 +149,28 @@ public class AddressTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenValidParams_whenCallAddressUpdate_thenShouldReturnAddressInstance() {
+        // Arrange
+        final var address = Address.create(
+                "Rua abcd",
+                "Rio de Janeiro",
+                States.RJ,
+                "s/n",
+                "11111-111"
+        );
+
+        // Act
+        address.update(STREET, CITY, STATE, NUMBER, ZIPCODE);
+
+        // Assert
+        assertNotNull(address);
+        assertNotNull(address.getId());
+        assertEquals(STREET, address.getStreet());
+        assertEquals(CITY, address.getCity());
+        assertEquals(STATE, address.getState());
+        assertEquals(NUMBER, address.getNumber());
+        assertEquals(ZIPCODE, address.getZipCode());
+    }
 }
