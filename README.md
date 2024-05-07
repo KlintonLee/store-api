@@ -4,7 +4,10 @@
 # Drafts
 
 ## Draft of database tables and relationships
-![image](https://github.com/KlintonLee/store-api/assets/57025080/78a8e761-86b7-4bc7-979a-ffc71a39c151)
+![image](https://github.com/KlintonLee/store-api/assets/57025080/324e05fe-2e58-4176-a8a2-211e098e3568)
+
+
+
 
 
 ## Draft of saving products
