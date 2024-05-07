@@ -112,8 +112,36 @@ public class AddressTest {
     @Test
     public void givenEmptyNumber_whenCallAddressValidate_thenShouldThrowDomainException() {
         // Arrange
-        final var address = Address.create(STREET, CITY, STATE, null, ZIPCODE);
+        final var emptyNumber = " ";
+        final var address = Address.create(STREET, CITY, STATE, emptyNumber, ZIPCODE);
         final var expectedErrorMessage = "Address number should not be null or empty";
+
+        // Act
+        final var exception = assertThrows(DomainException.class, () -> address.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenNullZipCode_whenCallAddressValidate_thenShouldThrowDomainException() {
+        // Arrange
+        final var address = Address.create(STREET, CITY, STATE, NUMBER, null);
+        final var expectedErrorMessage = "Zip code should not be null or empty";
+
+        // Act
+        final var exception = assertThrows(DomainException.class, () -> address.validate(new ThrowValidationHandler()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenEmptyZipCode_whenCallAddressValidate_thenShouldThrowDomainException() {
+        // Arrange
+        final var emptyZipCode = " ";
+        final var address = Address.create(STREET, CITY, STATE, NUMBER, emptyZipCode);
+        final var expectedErrorMessage = "Zip code should not be null or empty";
 
         // Act
         final var exception = assertThrows(DomainException.class, () -> address.validate(new ThrowValidationHandler()));
