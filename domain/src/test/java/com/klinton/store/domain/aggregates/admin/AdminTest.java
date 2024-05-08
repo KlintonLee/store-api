@@ -1,4 +1,4 @@
-package com.klinton.store.domain.users.admin;
+package com.klinton.store.domain.aggregates.admin;
 
 import com.klinton.store.domain.aggregate.admin.Admin;
 import com.klinton.store.domain.exception.DomainException;

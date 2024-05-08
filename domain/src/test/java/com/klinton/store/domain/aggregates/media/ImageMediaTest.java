@@ -1,4 +1,4 @@
-package com.klinton.store.domain.media;
+package com.klinton.store.domain.aggregates.media;
 
 import com.klinton.store.domain.aggregate.media.ImageMedia;
 import org.junit.jupiter.api.Test;

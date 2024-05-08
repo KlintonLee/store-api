@@ -1,4 +1,4 @@
-package com.klinton.store.domain.users.customer;
+package com.klinton.store.domain.aggregates.customer;
 
 import com.klinton.store.domain.aggregate.customer.Customer;
 import com.klinton.store.domain.exception.DomainException;

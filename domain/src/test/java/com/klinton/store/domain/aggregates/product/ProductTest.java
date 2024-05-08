@@ -1,4 +1,4 @@
-package com.klinton.store.domain.product;
+package com.klinton.store.domain.aggregates.product;
 
 import com.klinton.store.domain.aggregate.product.Product;
 import com.klinton.store.domain.exception.DomainException;
