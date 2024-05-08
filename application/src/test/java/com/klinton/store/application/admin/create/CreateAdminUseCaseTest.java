@@ -40,7 +40,7 @@ public class CreateAdminUseCaseTest {
                 EXPECT_PASSWORD,
                 EXPECTED_ACTIVE
         );
-        when(gateway.create(any()))
+        when(gateway.save(any()))
                 .thenAnswer(returnsFirstArg());
 
         // Act
@@ -50,7 +50,7 @@ public class CreateAdminUseCaseTest {
         assertNotNull(admin);
         assertNotNull(admin.id());
 
-        verify(gateway, times(1)).create(argThat(anAdmin ->
+        verify(gateway, times(1)).save(argThat(anAdmin ->
                 EXPECTED_NAME.equals(anAdmin.getName())
                         && EXPECTED_EMAIL.equals(anAdmin.getEmail())
                         && EXPECT_PASSWORD.equals(anAdmin.getPassword())
@@ -95,7 +95,7 @@ public class CreateAdminUseCaseTest {
                 EXPECT_PASSWORD,
                 EXPECTED_ACTIVE
         );
-        when(gateway.create(any()))
+        when(gateway.save(any()))
                 .thenThrow(new IllegalStateException(expectedErrorMessage));
 
         // Act

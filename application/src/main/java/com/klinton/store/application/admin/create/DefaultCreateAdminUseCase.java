@@ -31,7 +31,7 @@ public class DefaultCreateAdminUseCase extends CreateAdminUseCase {
         if (notification.hasError()) {
             unprocessableEntity(notification);
         }
-        adminGateway.create(admin);
+        adminGateway.save(admin);
         return CreateAdminOutput.from(admin);
     }
 

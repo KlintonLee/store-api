@@ -6,11 +6,9 @@ import com.klinton.store.domain.pagination.SearchQuery;
 import java.util.Optional;
 
 public interface AdminGateway {
-    Admin create(Admin admin);
+    Admin save(Admin admin);
 
     Optional<Admin> getById(AdminID adminID);
-
-    Admin update(Admin admin);
 
     void delete(AdminID adminID);
 

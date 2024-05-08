@@ -38,7 +38,7 @@ public class DeleteAdminUseCaseTest {
         final var updatedAt = admin.getUpdatedAt();
 
         when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
-        when(adminGateway.update(admin)).thenAnswer(returnsFirstArg());
+        when(adminGateway.save(admin)).thenAnswer(returnsFirstArg());
 
         // Act
         Thread.sleep(1);
@@ -67,7 +67,7 @@ public class DeleteAdminUseCaseTest {
         final var expectedErrorMessage = "Gateway error";
 
         when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
-        when(adminGateway.update(admin)).thenThrow(new IllegalStateException(expectedErrorMessage));
+        when(adminGateway.save(admin)).thenThrow(new IllegalStateException(expectedErrorMessage));
 
         // Act
         Thread.sleep(1);
