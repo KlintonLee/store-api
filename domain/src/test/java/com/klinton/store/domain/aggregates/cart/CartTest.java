@@ -19,15 +19,15 @@ public class CartTest {
     @Test
     public void givenValidParams_whenCallCartCreate_thenShouldReturnANewOne() {
         // Act
-        final var cart = Cart.create(CUSTOMER_ID, PRODUCT_ID, QUANTITY, PRICE);
+        final var cart = Cart.with(CUSTOMER_ID, PRODUCT_ID, QUANTITY, PRICE);
 
         // Assert
         assertNotNull(cart);
-        assertNotNull(cart.getId());
-        assertEquals(CUSTOMER_ID, cart.getCustomerId());
-        assertEquals(PRODUCT_ID, cart.getProductId());
-        assertEquals(QUANTITY, cart.getQuantity());
-        assertEquals(PRICE, cart.getPrice());
+        assertNotNull(cart.id());
+        assertEquals(CUSTOMER_ID, cart.customerId());
+        assertEquals(PRODUCT_ID, cart.productId());
+        assertEquals(QUANTITY, cart.quantity());
+        assertEquals(PRICE, cart.price());
     }
 
 }

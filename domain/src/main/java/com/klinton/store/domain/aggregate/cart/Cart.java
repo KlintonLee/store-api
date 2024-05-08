@@ -1,11 +1,13 @@
 package com.klinton.store.domain.aggregate.cart;
 
-import com.klinton.store.domain.AggregateRoot;
-import com.klinton.store.domain.validation.ValidationHandler;
+import com.klinton.store.domain.ValueObject;
 
 import java.util.Objects;
+import java.util.UUID;
 
-public class Cart extends AggregateRoot<CartId> {
+public class Cart extends ValueObject {
+
+    private String id;
 
     private String customerId;
 
@@ -16,47 +18,56 @@ public class Cart extends AggregateRoot<CartId> {
     private double price;
 
     protected Cart(
-            final CartId cartId,
+            final String id,
             final String customerId,
             final String productId,
             final int quantity,
             final double price
     ) {
-        super(cartId);
+        this.id = Objects.requireNonNull(id);
         this.customerId = Objects.requireNonNull(customerId);
         this.productId = Objects.requireNonNull(productId);
         this.quantity = quantity;
         this.price = price;
     }
 
-    public static Cart create(
+    public static Cart with(
             final String customerId,
             final String productId,
             final int quantity,
             final double price
     ) {
-        var cartId = CartId.unique();
-        return new Cart(cartId, customerId, productId, quantity, price);
+        final var id = UUID.randomUUID().toString();
+        return new Cart(id, customerId, productId, quantity, price);
     }
 
-    @Override
-    public void validate(ValidationHandler handler) {
-
+    public static Cart with(
+            final String id,
+            final String customerId,
+            final String productId,
+            final int quantity,
+            final double price
+    ) {
+        return new Cart(id, customerId, productId, quantity, price);
     }
 
-    public String getCustomerId() {
+    public String id() {
+        return id;
+    }
+
+    public String customerId() {
         return customerId;
     }
 
-    public String getProductId() {
+    public String productId() {
         return productId;
     }
 
-    public int getQuantity() {
+    public int quantity() {
         return quantity;
     }
 
-    public double getPrice() {
+    public double price() {
         return price;
     }
 }
