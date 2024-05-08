@@ -15,7 +15,7 @@ public class Admin extends AggregateRoot<AdminID> {
 
     private boolean active;
 
-    private Instant createdAt;
+    private final Instant createdAt;
 
     private Instant updatedAt;
 
