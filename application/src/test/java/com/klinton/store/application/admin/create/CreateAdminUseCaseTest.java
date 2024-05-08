@@ -1,6 +1,7 @@
 package com.klinton.store.application.admin.create;
 
 import com.klinton.store.domain.core.admin.AdminGateway;
+import com.klinton.store.domain.exception.UnprocessableEntityException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -55,5 +56,31 @@ public class CreateAdminUseCaseTest {
                         && EXPECT_PASSWORD.equals(anAdmin.getPassword())
                         && EXPECTED_ACTIVE == anAdmin.isActive()
         ));
+    }
+
+    @Test
+    public void givenACommandWithNullOrEmptyName_whenCallCreateAdminExecute_ShouldThrowUnprocessableEntityException() {
+        // Arrange
+        final var expectedErrorMessage = "Name should not be null or empty";
+        final var nullNameCommand = CreateAdminCommand.with(
+                null,
+                EXPECTED_EMAIL,
+                EXPECT_PASSWORD,
+                EXPECTED_ACTIVE
+        );
+        final var emptyNameCommand = CreateAdminCommand.with(
+                " ",
+                EXPECTED_EMAIL,
+                EXPECT_PASSWORD,
+                EXPECTED_ACTIVE
+        );
+
+        // Act
+        final var nullNameException = assertThrows(UnprocessableEntityException.class, () -> useCase.execute(nullNameCommand));
+        final var emptyNameException = assertThrows(UnprocessableEntityException.class, () -> useCase.execute(emptyNameCommand));
+
+        // Assert
+        assertEquals(expectedErrorMessage, nullNameException.getMessage());
+        assertEquals(expectedErrorMessage, emptyNameException.getMessage());
     }
 }
