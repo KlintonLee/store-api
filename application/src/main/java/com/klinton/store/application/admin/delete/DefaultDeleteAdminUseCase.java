@@ -19,7 +19,7 @@ public class DefaultDeleteAdminUseCase extends DeleteAdminUseCase {
         final var adminID = AdminID.from(input);
         final var admin = adminGateway.getById(adminID).orElseThrow(Utils.notFound(adminID, AdminID.class));
 
-        admin.update(admin.getName(), admin.getEmail(), admin.getPassword(), false);
+        admin.deactivate();
         adminGateway.update(admin);
     }
 }
