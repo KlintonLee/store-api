@@ -1,4 +1,4 @@
-package com.klinton.store.domain.aggregate.purchase;
+package com.klinton.store.domain.core.purchase;
 
 import com.klinton.store.domain.ValueObject;
 

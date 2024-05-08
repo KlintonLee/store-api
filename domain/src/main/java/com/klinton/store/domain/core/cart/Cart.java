@@ -1,4 +1,4 @@
-package com.klinton.store.domain.aggregate.cart;
+package com.klinton.store.domain.core.cart;
 
 import com.klinton.store.domain.ValueObject;
 

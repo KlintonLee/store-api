@@ -1,4 +1,4 @@
-package com.klinton.store.domain.aggregate.admin;
+package com.klinton.store.domain.core.admin;
 
 import com.klinton.store.domain.AggregateRoot;
 import com.klinton.store.domain.validation.ValidationHandler;

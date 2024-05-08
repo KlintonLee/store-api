@@ -1,4 +1,4 @@
-package com.klinton.store.domain.aggregate.address;
+package com.klinton.store.domain.core.address;
 
 import com.klinton.store.domain.Identifier;
 

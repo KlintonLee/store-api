@@ -1,6 +1,6 @@
 package com.klinton.store.domain.aggregates.media;
 
-import com.klinton.store.domain.aggregate.media.ImageMedia;
+import com.klinton.store.domain.core.media.ImageMedia;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

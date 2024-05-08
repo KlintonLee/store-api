@@ -1,6 +1,6 @@
 package com.klinton.store.domain.aggregates.cart;
 
-import com.klinton.store.domain.aggregate.cart.Cart;
+import com.klinton.store.domain.core.cart.Cart;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

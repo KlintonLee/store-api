@@ -1,6 +1,6 @@
 package com.klinton.store.domain.aggregates.purchase;
 
-import com.klinton.store.domain.aggregate.purchase.Purchase;
+import com.klinton.store.domain.core.purchase.Purchase;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;

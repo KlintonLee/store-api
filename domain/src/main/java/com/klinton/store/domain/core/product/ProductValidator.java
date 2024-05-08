@@ -1,4 +1,4 @@
-package com.klinton.store.domain.aggregate.product;
+package com.klinton.store.domain.core.product;
 
 import com.klinton.store.domain.validation.Error;
 import com.klinton.store.domain.validation.ValidationHandler;
