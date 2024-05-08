@@ -63,6 +63,20 @@ public class Admin extends AggregateRoot<AdminID> {
         this.deletedAt = active ? null : this.deletedAt;
     }
 
+    public void deactivate() {
+        this.active = false;
+        this.updatedAt = Instant.now();
+        if (this.deletedAt == null) {
+            this.deletedAt = Instant.now();
+        }
+    }
+
+    public void activate() {
+        this.active = true;
+        this.updatedAt = Instant.now();
+        this.deletedAt = null;
+    }
+
     public String getName() {
         return name;
     }
