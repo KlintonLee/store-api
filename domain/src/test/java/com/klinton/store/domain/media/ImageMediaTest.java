@@ -8,40 +8,38 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ImageMediaTest {
 
+    private static final String PRODUCT_ID = "productId";
+
+    private static final String LOCATION = "location";
+
+    private static final String CONTENT_TYPE = "image/jpeg";
+
     @Test
     public void givenValidParamsWithoutId_whenCallImageMediaWith_thenShouldReturnImageMediaInstance() {
-        // Given
-        var checksum = "checksum";
-        var name = "name";
-        var location = "location";
-
         // When
-        var imageMedia = ImageMedia.with(checksum, name, location);
+        var imageMedia = ImageMedia.with(PRODUCT_ID, LOCATION, CONTENT_TYPE);
 
         // Then
         assertNotNull(imageMedia);
         assertNotNull(imageMedia.id());
-        assertEquals(checksum, imageMedia.checksum());
-        assertEquals(name, imageMedia.name());
-        assertEquals(location, imageMedia.location());
+        assertEquals(PRODUCT_ID, imageMedia.productId());
+        assertEquals(LOCATION, imageMedia.location());
+        assertEquals(CONTENT_TYPE, imageMedia.contentType());
     }
 
     @Test
     public void givenValidParamsWithId_whenCallImageMediaWith_thenShouldReturnImageMediaInstance() {
         // Given
-        var id = "id";
-        var checksum = "checksum";
-        var name = "name";
-        var location = "location";
+        var id = "imageId";
 
         // When
-        var imageMedia = ImageMedia.with(id, checksum, name, location);
+        var imageMedia = ImageMedia.with(id, PRODUCT_ID, LOCATION, CONTENT_TYPE);
 
         // Then
         assertNotNull(imageMedia);
         assertEquals(id, imageMedia.id());
-        assertEquals(checksum, imageMedia.checksum());
-        assertEquals(name, imageMedia.name());
-        assertEquals(location, imageMedia.location());
+        assertEquals(PRODUCT_ID, imageMedia.productId());
+        assertEquals(LOCATION, imageMedia.location());
+        assertEquals(CONTENT_TYPE, imageMedia.contentType());
     }
 }
