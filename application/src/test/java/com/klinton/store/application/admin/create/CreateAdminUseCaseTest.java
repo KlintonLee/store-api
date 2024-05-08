@@ -83,4 +83,25 @@ public class CreateAdminUseCaseTest {
         assertEquals(expectedErrorMessage, nullNameException.getMessage());
         assertEquals(expectedErrorMessage, emptyNameException.getMessage());
     }
+
+
+    @Test
+    public void givenValidCommand_whenGatewayThrowsException_shouldReturnTheException() {
+        // Arrange
+        final var expectedErrorMessage = "Gateway error";
+        final var command = CreateAdminCommand.with(
+                EXPECTED_NAME,
+                EXPECTED_EMAIL,
+                EXPECT_PASSWORD,
+                EXPECTED_ACTIVE
+        );
+        when(gateway.create(any()))
+                .thenThrow(new IllegalStateException(expectedErrorMessage));
+
+        // Act
+        final var exception = assertThrows(IllegalStateException.class, () -> useCase.execute(command));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
