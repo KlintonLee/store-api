@@ -129,4 +129,40 @@ public class AdminTest {
         assertTrue(admin.getUpdatedAt().isAfter(updatedAt));
         assertNull(admin.getDeletedAt());
     }
+
+    @Test
+    public void givenAnActiveAdmin_whenCallInactivate_thenShouldReturnInactiveAdmin() throws InterruptedException {
+        // Arrange
+        final var admin = Admin.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var createdAt = admin.getCreatedAt();
+        final var updatedAt = admin.getUpdatedAt();
+
+        // Act
+        Thread.sleep(1);
+        admin.deactivate();
+
+        // Assert
+        assertFalse(admin.isActive());
+        assertNotNull(admin.getDeletedAt());
+        assertEquals(createdAt, admin.getCreatedAt());
+        assertTrue(admin.getUpdatedAt().isAfter(updatedAt));
+    }
+
+    @Test
+    public void givenAnInactiveAdmin_whenCallActivate_thenShouldReturnActiveAdmin() throws InterruptedException {
+        // Arrange
+        final var admin = Admin.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, false);
+        final var createdAt = admin.getCreatedAt();
+        final var updatedAt = admin.getUpdatedAt();
+
+        // Act
+        Thread.sleep(1);
+        admin.activate();
+
+        // Assert
+        assertTrue(admin.isActive());
+        assertNull(admin.getDeletedAt());
+        assertEquals(createdAt, admin.getCreatedAt());
+        assertTrue(admin.getUpdatedAt().isAfter(updatedAt));
+    }
 }
