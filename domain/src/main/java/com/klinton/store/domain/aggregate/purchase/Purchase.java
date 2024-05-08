@@ -1,11 +1,14 @@
 package com.klinton.store.domain.aggregate.purchase;
 
-import com.klinton.store.domain.AggregateRoot;
-import com.klinton.store.domain.validation.ValidationHandler;
+import com.klinton.store.domain.ValueObject;
 
 import java.time.Instant;
+import java.util.Objects;
+import java.util.UUID;
 
-public class Purchase extends AggregateRoot<PurchaseId> {
+public class Purchase extends ValueObject {
+
+    private final String id;
 
     private final String customerId;
 
@@ -18,54 +21,64 @@ public class Purchase extends AggregateRoot<PurchaseId> {
     private final String paymentMethod;
 
     protected Purchase(
-            final PurchaseId purchaseId,
+            final String id,
             final String customerId,
             final String AddressId,
             final Instant purchaseDate,
             final double totalPrice,
             final String paymentMethod
     ) {
-        super(purchaseId);
-        this.customerId = customerId;
-        this.AddressId = AddressId;
-        this.purchaseDate = purchaseDate;
+        this.id = Objects.requireNonNull(id);
+        this.customerId = Objects.requireNonNull(customerId);
+        this.AddressId = Objects.requireNonNull(AddressId);
+        this.purchaseDate = Objects.requireNonNull(purchaseDate);
         this.totalPrice = totalPrice;
-        this.paymentMethod = paymentMethod;
+        this.paymentMethod = Objects.requireNonNull(paymentMethod);
     }
 
-    public static Purchase create(
+    public static Purchase with(
             final String customerId,
             final String AddressId,
             final Instant purchaseDate,
             final double totalPrice,
             final String paymentMethod
     ) {
-        var purchaseId = PurchaseId.unique();
-        return new Purchase(purchaseId, customerId, AddressId, purchaseDate, totalPrice, paymentMethod);
+        final var id = UUID.randomUUID().toString();
+        return new Purchase(id, customerId, AddressId, purchaseDate, totalPrice, paymentMethod);
     }
 
-    @Override
-    public void validate(ValidationHandler handler) {
-
+    public static Purchase with(
+            final String id,
+            final String customerId,
+            final String AddressId,
+            final Instant purchaseDate,
+            final double totalPrice,
+            final String paymentMethod
+    ) {
+        return new Purchase(id, customerId, AddressId, purchaseDate, totalPrice, paymentMethod);
     }
 
-    public String getCustomerId() {
+    public String id() {
+        return id;
+    }
+
+    public String customerId() {
         return customerId;
     }
 
-    public String getAddressId() {
+    public String addressId() {
         return AddressId;
     }
 
-    public Instant getPurchaseDate() {
+    public Instant purchaseDate() {
         return purchaseDate;
     }
 
-    public double getTotalPrice() {
+    public double totalPrice() {
         return totalPrice;
     }
 
-    public String getPaymentMethod() {
+    public String paymentMethod() {
         return paymentMethod;
     }
 }

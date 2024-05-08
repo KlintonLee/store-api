@@ -24,15 +24,15 @@ public class PurchaseTest {
     @Test
     public void givenValidParams_whenCallPurchaseCreate_thenShouldReturnANewOne() {
         // Act
-        final var purchase = Purchase.create(CUSTOMER_ID, ADDRESS_ID, PURCHASE_DATE, TOTAL, PAYMENT_METHOD);
+        final var purchase = Purchase.with(CUSTOMER_ID, ADDRESS_ID, PURCHASE_DATE, TOTAL, PAYMENT_METHOD);
 
         // Assert
         assertNotNull(purchase);
-        assertNotNull(purchase.getId());
-        assertEquals(CUSTOMER_ID, purchase.getCustomerId());
-        assertEquals(ADDRESS_ID, purchase.getAddressId());
-        assertEquals(PURCHASE_DATE, purchase.getPurchaseDate());
-        assertEquals(TOTAL, purchase.getTotalPrice());
-        assertEquals(PAYMENT_METHOD, purchase.getPaymentMethod());
+        assertNotNull(purchase.id());
+        assertEquals(CUSTOMER_ID, purchase.customerId());
+        assertEquals(ADDRESS_ID, purchase.addressId());
+        assertEquals(PURCHASE_DATE, purchase.purchaseDate());
+        assertEquals(TOTAL, purchase.totalPrice());
+        assertEquals(PAYMENT_METHOD, purchase.paymentMethod());
     }
 }
