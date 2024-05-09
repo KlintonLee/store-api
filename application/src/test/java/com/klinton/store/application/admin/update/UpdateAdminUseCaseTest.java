@@ -94,4 +94,22 @@ public class UpdateAdminUseCaseTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenAValidCommand_whenGatewayThrowsException_shouldReturnTheException() {
+        // Arrange
+        final var admin = Admin.create("Jane Doe", "jane.doe@fake_email.com", "654321", false);
+        final var adminId = admin.getId();
+        final var expectedErrorMessage = "Gateway error";
+
+        final var command = UpdateAdminCommand.with(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
+        when(adminGateway.save(any())).thenThrow(new IllegalStateException(expectedErrorMessage));
+
+        // Act
+        final var exception = assertThrows(IllegalStateException.class, () -> useCase.execute(command));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
