@@ -10,11 +10,15 @@ public record Pagination<T>(
         List<T> items
 ) {
 
-        public <R> Pagination<R> map(final Function<T, R> mapper) {
-            final List<R> aNewList = this.items.stream()
-                    .map(mapper)
-                    .toList();
+    public static <T> Pagination<T> of(final int currentPage, final int perPage, final long total, final List<T> items) {
+            return new Pagination<>(currentPage, perPage, total, items);
+    }
 
-            return new Pagination<>(currentPage(), perPage(), total(), aNewList);
-        }
+    public <R> Pagination<R> map(final Function<T, R> mapper) {
+        final List<R> aNewList = this.items.stream()
+                .map(mapper)
+                .toList();
+
+        return new Pagination<>(currentPage(), perPage(), total(), aNewList);
+    }
 }
