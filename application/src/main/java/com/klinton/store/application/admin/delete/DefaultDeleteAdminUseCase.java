@@ -1,6 +1,5 @@
 package com.klinton.store.application.admin.delete;
 
-import com.klinton.store.application.Utils;
 import com.klinton.store.domain.core.admin.AdminGateway;
 import com.klinton.store.domain.core.admin.AdminID;
 
@@ -17,9 +16,11 @@ public class DefaultDeleteAdminUseCase extends DeleteAdminUseCase {
     @Override
     public void execute(String input) {
         final var adminID = AdminID.from(input);
-        final var admin = adminGateway.getById(adminID).orElseThrow(Utils.notFound(adminID, AdminID.class));
+        final var admin = adminGateway.getById(adminID);
 
-        admin.deactivate();
-        adminGateway.save(admin);
+        admin.ifPresent(adm -> {
+            adm.deactivate();
+            adminGateway.save(adm);
+        });
     }
 }
