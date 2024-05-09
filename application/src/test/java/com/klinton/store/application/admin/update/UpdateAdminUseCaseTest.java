@@ -2,6 +2,7 @@ package com.klinton.store.application.admin.update;
 
 import com.klinton.store.domain.core.admin.Admin;
 import com.klinton.store.domain.core.admin.AdminGateway;
+import com.klinton.store.domain.exception.UnprocessableEntityException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -58,5 +59,22 @@ public class UpdateAdminUseCaseTest {
                 && updatedAt.isBefore(anAdmin.getUpdatedAt())
                 && anAdmin.getDeletedAt() == null
         ));
+    }
+
+    @Test
+    public void givenAnInvalidCommandWithNullName_whenCallUpdateAdminUseCase_shouldThrowException() {
+        // Arrange
+        final var admin = Admin.create("Jane Doe", "jane.doe@fake_email.com", "654321", false);
+        final var adminId = admin.getId();
+        final var expectedErrorMessage = "Name should not be null or empty";
+
+        final var command = UpdateAdminCommand.with(adminId.getValue(), null, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
+
+        // Act
+        final var exception = assertThrows(UnprocessableEntityException.class, () -> useCase.execute(command));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }
