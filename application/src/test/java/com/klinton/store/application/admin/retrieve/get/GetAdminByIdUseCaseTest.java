@@ -20,8 +20,6 @@ public class GetAdminByIdUseCaseTest {
 
     private final static String EXPECTED_EMAIL = "john.doe@fake_email.com";
 
-    private final static String EXPECTED_PASSWORD = "123456";
-
     private final static boolean EXPECTED_ACTIVE = true;
 
     @InjectMocks
@@ -33,7 +31,7 @@ public class GetAdminByIdUseCaseTest {
     @Test
     public void givenAValidId_whenCallGetById_thenShouldReturnAdmin() {
         // Arrange
-        final var admin = Admin.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECTED_PASSWORD, EXPECTED_ACTIVE);
+        final var admin = Admin.create(EXPECTED_NAME, EXPECTED_EMAIL, "123456", EXPECTED_ACTIVE);
         when(adminGateway.getById(admin.getId())).thenReturn(Optional.of(admin));
 
         // Act
@@ -43,7 +41,6 @@ public class GetAdminByIdUseCaseTest {
         assertNotNull(output);
         assertEquals(EXPECTED_NAME, output.name());
         assertEquals(EXPECTED_EMAIL, output.email());
-        assertEquals(EXPECTED_PASSWORD, output.password());
         assertEquals(EXPECTED_ACTIVE, output.active());
         assertNotNull(output.createdAt());
         assertNotNull(output.updatedAt());
