@@ -9,9 +9,10 @@ import com.klinton.store.application.admin.update.UpdateAdminCommand;
 import com.klinton.store.application.admin.update.UpdateAdminUseCase;
 import com.klinton.store.domain.pagination.Pagination;
 import com.klinton.store.domain.pagination.SearchQuery;
-import com.klinton.store.infrastructure.models.CreateAdminDto;
-import com.klinton.store.infrastructure.models.GetAdminOutput;
-import com.klinton.store.infrastructure.models.UpdateAdminDto;
+import com.klinton.store.infrastructure.admin.presenter.AdminApiPresenter;
+import com.klinton.store.infrastructure.admin.dto.CreateAdminDto;
+import com.klinton.store.infrastructure.admin.presenter.GetAdminOutput;
+import com.klinton.store.infrastructure.admin.dto.UpdateAdminDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,7 +65,7 @@ public class AdminController implements AdminApi {
 
     @Override
     public GetAdminOutput getAdminById(String id) {
-        return GetAdminOutput.from(getAdminByIdUseCase.execute(id));
+        return AdminApiPresenter.present(getAdminByIdUseCase.execute(id));
     }
 
     @Override

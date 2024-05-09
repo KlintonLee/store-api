@@ -1,4 +1,4 @@
-package com.klinton.store.infrastructure.models;
+package com.klinton.store.infrastructure.admin.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

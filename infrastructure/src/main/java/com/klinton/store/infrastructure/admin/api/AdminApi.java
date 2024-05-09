@@ -1,9 +1,9 @@
 package com.klinton.store.infrastructure.admin.api;
 
 import com.klinton.store.domain.pagination.Pagination;
-import com.klinton.store.infrastructure.models.CreateAdminDto;
-import com.klinton.store.infrastructure.models.GetAdminOutput;
-import com.klinton.store.infrastructure.models.UpdateAdminDto;
+import com.klinton.store.infrastructure.admin.dto.CreateAdminDto;
+import com.klinton.store.infrastructure.admin.presenter.GetAdminOutput;
+import com.klinton.store.infrastructure.admin.dto.UpdateAdminDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
