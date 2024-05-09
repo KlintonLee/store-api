@@ -25,9 +25,8 @@ public class DefaultUpdateAdminUseCase extends UpdateAdminUseCase {
 
         final var name = command.name();
         final var email = command.email();
-        final var password = command.password();
         final var active = command.active();
-        admin.update(name, email, password, active);
+        admin.update(name, email, active);
 
         final var notification = Notification.create();
         admin.validate(notification);

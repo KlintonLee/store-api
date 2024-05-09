@@ -4,7 +4,6 @@ public record UpdateAdminCommand(
         String id,
         String name,
         String email,
-        String password,
         boolean active
 ) {
 
@@ -12,9 +11,8 @@ public record UpdateAdminCommand(
             final String id,
             final String name,
             final String email,
-            final String password,
             final boolean active
     ) {
-        return new UpdateAdminCommand(id, name, email, password, active);
+        return new UpdateAdminCommand(id, name, email, active);
     }
 }

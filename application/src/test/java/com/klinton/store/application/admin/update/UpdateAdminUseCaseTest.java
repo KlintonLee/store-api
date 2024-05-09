@@ -23,8 +23,6 @@ public class UpdateAdminUseCaseTest {
 
     private final static String EXPECTED_EMAIL = "john.doe@fake_email.com";
 
-    private final static String EXPECT_PASSWORD = "123456";
-
     private final static boolean EXPECTED_ACTIVE = true;
 
     @InjectMocks
@@ -41,7 +39,7 @@ public class UpdateAdminUseCaseTest {
         final var createdAt = admin.getCreatedAt();
         final var updatedAt = admin.getUpdatedAt();
 
-        final var command = UpdateAdminCommand.with(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var command = UpdateAdminCommand.with(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECTED_ACTIVE);
         when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
         when(adminGateway.save(any())).thenAnswer(returnsFirstArg());
 
@@ -54,7 +52,6 @@ public class UpdateAdminUseCaseTest {
         verify(adminGateway, times(1)).save(argThat(anAdmin ->
                 EXPECTED_NAME.equals(anAdmin.getName())
                 && EXPECTED_EMAIL.equals(anAdmin.getEmail())
-                && EXPECT_PASSWORD.equals(anAdmin.getPassword())
                 && EXPECTED_ACTIVE == anAdmin.isActive()
                 && createdAt.equals(anAdmin.getCreatedAt())
                 && updatedAt.isBefore(anAdmin.getUpdatedAt())
@@ -69,7 +66,7 @@ public class UpdateAdminUseCaseTest {
         final var adminId = admin.getId();
         final var expectedErrorMessage = "Name should not be null or empty";
 
-        final var command = UpdateAdminCommand.with(adminId.getValue(), null, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var command = UpdateAdminCommand.with(adminId.getValue(), null, EXPECTED_EMAIL, EXPECTED_ACTIVE);
         when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
 
         // Act
@@ -85,7 +82,7 @@ public class UpdateAdminUseCaseTest {
         final var adminId = "invalid_id";
         final var expectedErrorMessage = "Admin with ID invalid_id was not found.";
 
-        final var command = UpdateAdminCommand.with(adminId, null, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var command = UpdateAdminCommand.with(adminId, null, EXPECTED_EMAIL, EXPECTED_ACTIVE);
         when(adminGateway.getById(any())).thenReturn(Optional.empty());
 
         // Act
@@ -102,7 +99,7 @@ public class UpdateAdminUseCaseTest {
         final var adminId = admin.getId();
         final var expectedErrorMessage = "Gateway error";
 
-        final var command = UpdateAdminCommand.with(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        final var command = UpdateAdminCommand.with(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECTED_ACTIVE);
         when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
         when(adminGateway.save(any())).thenThrow(new IllegalStateException(expectedErrorMessage));
 

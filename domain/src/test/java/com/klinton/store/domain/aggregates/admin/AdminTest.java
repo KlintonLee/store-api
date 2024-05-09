@@ -108,15 +108,14 @@ public class AdminTest {
         // Arrange
         final var updatedName = "Jane Doe";
         final var updatedEmail = "jane.doe@fake_email.com";
-        final var updatedPassword = "654321";
         final var updatedActive = false;
-        final var admin = Admin.create(updatedName, updatedEmail, updatedPassword, updatedActive);
+        final var admin = Admin.create(updatedName, updatedEmail, EXPECT_PASSWORD, updatedActive);
         final var createdAt = admin.getCreatedAt();
         final var updatedAt = admin.getUpdatedAt();
 
         // Act
         Thread.sleep(1);
-        admin.update(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        admin.update(EXPECTED_NAME, EXPECTED_EMAIL, EXPECTED_ACTIVE);
 
         // Assert
         assertNotNull(admin);
