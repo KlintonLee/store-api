@@ -1,4 +1,4 @@
-package com.klinton.store.infrastructure.api;
+package com.klinton.store.infrastructure.admin.api;
 
 import com.klinton.store.domain.pagination.Pagination;
 import com.klinton.store.infrastructure.models.CreateAdminDto;

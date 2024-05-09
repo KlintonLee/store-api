@@ -1,4 +1,4 @@
-package com.klinton.store.infrastructure.api.controllers;
+package com.klinton.store.infrastructure.admin.api;
 
 import com.klinton.store.application.admin.create.CreateAdminCommand;
 import com.klinton.store.application.admin.create.CreateAdminUseCase;
@@ -9,7 +9,6 @@ import com.klinton.store.application.admin.update.UpdateAdminCommand;
 import com.klinton.store.application.admin.update.UpdateAdminUseCase;
 import com.klinton.store.domain.pagination.Pagination;
 import com.klinton.store.domain.pagination.SearchQuery;
-import com.klinton.store.infrastructure.api.AdminApi;
 import com.klinton.store.infrastructure.models.CreateAdminDto;
 import com.klinton.store.infrastructure.models.GetAdminOutput;
 import com.klinton.store.infrastructure.models.UpdateAdminDto;
