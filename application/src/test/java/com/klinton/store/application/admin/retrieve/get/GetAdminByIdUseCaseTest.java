@@ -2,6 +2,7 @@ package com.klinton.store.application.admin.retrieve.get;
 
 import com.klinton.store.domain.core.admin.Admin;
 import com.klinton.store.domain.core.admin.AdminGateway;
+import com.klinton.store.domain.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,4 +49,30 @@ public class GetAdminByIdUseCaseTest {
         assertNull(output.deletedAt());
     }
 
+    @Test
+    public void givenANonExistingAdminId_whenCallsGetById_thenShouldThrowNotFoundException() {
+        // Arrange
+        when(adminGateway.getById(any())).thenReturn(Optional.empty());
+        final var expectedErrorMessage = "Admin with ID 123 was not found.";
+
+        // Act
+        final var exception = assertThrows(NotFoundException.class, () -> useCase.execute("123"));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenAValidId_whenGatewayThrowsException_shouldReturnTheException() {
+        // Arrange
+        final var expectedErrorMessage = new IllegalStateException("Gateway error");
+        final var admin = Admin.create(EXPECTED_NAME, EXPECTED_EMAIL, "123456", EXPECTED_ACTIVE);
+        when(adminGateway.getById(admin.getId())).thenThrow(expectedErrorMessage);
+
+        // Act
+        final var exception = assertThrows(IllegalStateException.class, () -> useCase.execute(admin.getId().getValue()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception);
+    }
 }
