@@ -2,6 +2,7 @@ package com.klinton.store.application.admin.update;
 
 import com.klinton.store.domain.core.admin.Admin;
 import com.klinton.store.domain.core.admin.AdminGateway;
+import com.klinton.store.domain.exception.NotFoundException;
 import com.klinton.store.domain.exception.UnprocessableEntityException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,6 +74,22 @@ public class UpdateAdminUseCaseTest {
 
         // Act
         final var exception = assertThrows(UnprocessableEntityException.class, () -> useCase.execute(command));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenACommandWithNonExistingAdmin_whenCallUpdateAdminUseCase_shouldThrowException() {
+        // Arrange
+        final var adminId = "invalid_id";
+        final var expectedErrorMessage = "Admin with ID invalid_id was not found.";
+
+        final var command = UpdateAdminCommand.with(adminId, null, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECTED_ACTIVE);
+        when(adminGateway.getById(any())).thenReturn(Optional.empty());
+
+        // Act
+        final var exception = assertThrows(NotFoundException.class, () -> useCase.execute(command));
 
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
