@@ -14,10 +14,12 @@ import com.klinton.store.infrastructure.models.CreateAdminDto;
 import com.klinton.store.infrastructure.models.GetAdminOutput;
 import com.klinton.store.infrastructure.models.UpdateAdminDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.util.Objects;
 
+@RestController
 public class AdminController implements AdminApi {
 
     private final CreateAdminUseCase createAdminUseCase;
@@ -52,7 +54,7 @@ public class AdminController implements AdminApi {
                 true
         );
         final var admin = createAdminUseCase.execute(createCommand);
-        return ResponseEntity.created(URI.create("/admin/" + admin.id())).body(admin.id());
+        return ResponseEntity.created(URI.create("/admin/" + admin.id())).body(admin);
     }
 
     @Override
