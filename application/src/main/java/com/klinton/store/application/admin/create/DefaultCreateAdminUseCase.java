@@ -1,13 +1,12 @@
 package com.klinton.store.application.admin.create;
 
+import com.klinton.store.application.Utils;
 import com.klinton.store.domain.core.admin.Admin;
 import com.klinton.store.domain.core.admin.AdminGateway;
 import com.klinton.store.domain.exception.UnprocessableEntityException;
-import com.klinton.store.domain.validation.Error;
 import com.klinton.store.domain.validation.Notification;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class DefaultCreateAdminUseCase extends CreateAdminUseCase {
 
@@ -29,17 +28,10 @@ public class DefaultCreateAdminUseCase extends CreateAdminUseCase {
         admin.validate(notification);
 
         if (notification.hasError()) {
-            unprocessableEntity(notification);
+            var messageError = Utils.mountErrorMessage(notification);
+            throw new UnprocessableEntityException(messageError);
         }
         adminGateway.save(admin);
         return CreateAdminOutput.from(admin);
-    }
-
-    private static void unprocessableEntity(Notification notification) {
-        final var errorMessage = notification.getErrors()
-                .stream()
-                .map(Error::message)
-                .collect(Collectors.joining("; "));
-        throw new UnprocessableEntityException(errorMessage);
     }
 }
