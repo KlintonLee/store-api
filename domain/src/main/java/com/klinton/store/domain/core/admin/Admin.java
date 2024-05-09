@@ -49,6 +49,19 @@ public class Admin extends AggregateRoot<AdminID> {
         return new Admin(id, name, email, password, active, now, now, deletedAt);
     }
 
+    public static Admin with(
+            final AdminID adminID,
+            final String name,
+            final String email,
+            final String password,
+            final boolean active,
+            final Instant createdAt,
+            final Instant updatedAt,
+            final Instant deletedAt
+    ) {
+        return new Admin(adminID, name, email, password, active, createdAt, updatedAt, deletedAt);
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
         new AdminValidator(this, handler).validate();
