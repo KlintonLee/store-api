@@ -6,3 +6,12 @@ server:
     enabled: true # Whether response compression is enabled.
     mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json # Comma-separated list of MIME types that should be compressed.
     min-response-size: 1024 # Minimum "Content-Length" value that is required for compression to be performed.
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:5432/store"
+    username: postgres
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
