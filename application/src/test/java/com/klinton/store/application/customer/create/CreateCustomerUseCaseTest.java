@@ -30,7 +30,7 @@ public class CreateCustomerUseCaseTest {
         final var password = "123456";
         final var phone = "123456789";
         final var active = true;
-        final var command = new CreateCustomerCommand(name, email, password, phone, active);
+        final var command = new CreateCustomerCommand(name, email, password, phone);
         when(gateway.save(any())).thenAnswer(returnsFirstArg());
 
         // Act
