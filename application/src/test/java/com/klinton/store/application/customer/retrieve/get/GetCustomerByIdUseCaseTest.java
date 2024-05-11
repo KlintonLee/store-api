@@ -2,6 +2,7 @@ package com.klinton.store.application.customer.retrieve.get;
 
 import com.klinton.store.domain.core.customer.Customer;
 import com.klinton.store.domain.core.customer.CustomerGateway;
+import com.klinton.store.domain.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -47,5 +49,18 @@ public class GetCustomerByIdUseCaseTest {
         assertNotNull(output.createdAt());
         assertNotNull(output.updatedAt());
         assertNull(output.deletedAt());
+    }
+
+    @Test
+    public void givenANonExistingCustomerId_whenCallsGetById_thenShouldThrowNotFoundException() {
+        // Arrange
+        when(customerGateway.getById(any())).thenReturn(Optional.empty());
+        final var expectedErrorMessage = "Customer with ID 123 was not found.";
+
+        // Act
+        final var exception = assertThrows(NotFoundException.class, () -> useCase.execute("123"));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }
