@@ -63,4 +63,19 @@ public class GetCustomerByIdUseCaseTest {
         // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenAValidId_whenGatewayThrowsException_shouldReturnTheException() {
+        // Arrange
+        final var expectedErrorMessage = new IllegalStateException("Gateway error");
+        final var customer = Customer.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECT_PHONE);
+        when(customerGateway.getById(customer.getId())).thenReturn(Optional.of(customer));
+        when(customerGateway.getById(customer.getId())).thenThrow(expectedErrorMessage);
+
+        // Act
+        final var exception = assertThrows(IllegalStateException.class, () -> useCase.execute(customer.getId().getValue()));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception);
+    }
 }
