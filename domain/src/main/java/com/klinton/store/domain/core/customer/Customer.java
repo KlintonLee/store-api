@@ -52,6 +52,20 @@ public class Customer extends AggregateRoot<CustomerID> {
         return new Customer(customerId, name, email, password, phone, true, now, now, null);
     }
 
+    public static Customer with(
+            CustomerID customerID,
+            final String name,
+            final String email,
+            final String password,
+            final String phone,
+            final boolean active,
+            final Instant createdAt,
+            final Instant updatedAt,
+            final Instant deletedAt
+    ) {
+        return new Customer(customerID, name, email, password, phone, active, createdAt, updatedAt, deletedAt);
+    }
+
     @Override
     public void validate(ValidationHandler handler) {
         new CustomerValidator(handler, this).validate();
