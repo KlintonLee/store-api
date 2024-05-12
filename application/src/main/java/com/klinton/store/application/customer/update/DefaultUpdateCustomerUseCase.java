@@ -25,7 +25,6 @@ public class DefaultUpdateCustomerUseCase extends UpdateCustomerUseCase {
         customer.update(
                 command.name(),
                 command.email(),
-                command.password(),
                 command.phone(),
                 command.active()
         );

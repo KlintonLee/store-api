@@ -35,9 +35,9 @@ public class UpdateCustomerUseCaseTest {
     private CustomerGateway customerGateway;
 
     @Test
-    public void givenAValidCommand_whenCallUpdate_thenShouldUpdateCustomer() {
+    public void givenAValidCommand_whenCallUpdate_thenShouldUpdateCustomer() throws InterruptedException {
         // Arrange
-        final var customer = Customer.create("JANE DOE", "jane.doe@fake_email.com", "654321", "987654321");
+        final var customer = Customer.create("JANE DOE", "jane.doe@fake_email.com", EXPECT_PASSWORD, "987654321");
         final var customerId = customer.getId();
         final var createdAt = customer.getCreatedAt();
         final var updatedAt = customer.getUpdatedAt();
@@ -45,7 +45,6 @@ public class UpdateCustomerUseCaseTest {
                 customerId.getValue(),
                 EXPECTED_NAME,
                 EXPECTED_EMAIL,
-                EXPECT_PASSWORD,
                 EXPECT_PHONE,
                 false
         );
@@ -54,6 +53,7 @@ public class UpdateCustomerUseCaseTest {
         when(customerGateway.save(customer)).thenAnswer(returnsFirstArg());
 
         // Act
+        Thread.sleep(1);
         final var output = useCase.execute(command);
 
         // Assert
@@ -73,7 +73,7 @@ public class UpdateCustomerUseCaseTest {
     @Test
     public void givenAnInvalidCommandWithNullName_whenCallUpdateCustomerUseCase_shouldThrowException() {
         // Arrange
-        final var customer = Customer.create("JANE DOE", "jane.doe@fake_email.com", "654321", "987654321");
+        final var customer = Customer.create("JANE DOE", "jane.doe@fake_email.com", EXPECT_PASSWORD, "987654321");
         final var customerId = customer.getId();
         final var expectedErrorMessage = "Name should not be null or empty";
 
@@ -81,7 +81,6 @@ public class UpdateCustomerUseCaseTest {
                 customerId.getValue(),
                 null,
                 EXPECTED_EMAIL,
-                EXPECT_PASSWORD,
                 EXPECT_PHONE,
                 false
         );
@@ -104,7 +103,6 @@ public class UpdateCustomerUseCaseTest {
                 customerId,
                 EXPECTED_NAME,
                 EXPECTED_EMAIL,
-                EXPECT_PASSWORD,
                 EXPECT_PHONE,
                 false
         );
@@ -119,13 +117,12 @@ public class UpdateCustomerUseCaseTest {
     @Test
     public void givenAValidCommand_whenGatewayThrowsException_shouldReturnTheException() {
         // Arrange
-        final var customer = Customer.create("JANE DOE", "jane.doe@fake_email.com", "654321", "987654321");
+        final var customer = Customer.create("JANE DOE", "jane.doe@fake_email.com", EXPECT_PASSWORD, "987654321");
         final var customerId = customer.getId();
         final var command = UpdateCustomerCommand.with(
                 customerId.getValue(),
                 EXPECTED_NAME,
                 EXPECTED_EMAIL,
-                EXPECT_PASSWORD,
                 EXPECT_PHONE,
                 false
         );

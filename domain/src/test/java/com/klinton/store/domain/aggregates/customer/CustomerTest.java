@@ -96,13 +96,13 @@ public class CustomerTest {
     @Test
     public void givenValidParams_whenCallingUpdate_thenShouldUpdateCustomer() throws InterruptedException {
         // Arrange
-        var customer = Customer.create("Mary Doe", "marydoe@email.com", "old_passwod", "123");
+        var customer = Customer.create("Mary Doe", "marydoe@email.com", PASSWORD, "123");
         var createdAt = customer.getCreatedAt();
         var updatedAt = customer.getUpdatedAt();
 
         // Act
         Thread.sleep(1);
-        customer.update(NAME, EMAIL, PASSWORD, PHONE, false);
+        customer.update(NAME, EMAIL, PHONE, false);
 
         // Assert
         assertNotNull(customer);

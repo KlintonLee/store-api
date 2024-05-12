@@ -87,10 +87,9 @@ public class Customer extends AggregateRoot<CustomerID> {
         this.active = true;
     }
 
-    public void update(String name, String email, String password, String phone, boolean active) {
+    public void update(String name, String email, String phone, boolean active) {
         this.name = name;
         this.email = email;
-        this.password = password;
         this.phone = phone;
         if (active) {
             activate();
