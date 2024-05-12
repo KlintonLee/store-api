@@ -49,4 +49,41 @@ public class ListCustomersUseCaseTest {
         Assertions.assertEquals(expectedPerPage, output.perPage());
     }
 
+    @Test
+    public void givenAValidQuery_whenHasNoResults_thenShouldReturnEmptyCustomers() {
+        final var customers = List.<Customer>of();
+        final var expectedItemsCount = 0;
+        final var expectedPage = 1;
+        final var expectedPerPage = 10;
+        final var expectedResult = Pagination.of(expectedPage, expectedPerPage, expectedItemsCount, customers);
+
+        final var query = SearchQuery.of(expectedPage, expectedPerPage, "", "name", "asc");
+        when(customerGateway.getAll(query)).thenReturn(expectedResult);
+        final var expectedCustomers = expectedResult.items().stream().map(ListCustomerOutput::from).toList();
+
+        // Act
+        final var output = useCase.execute(query);
+
+        // Assert
+        Assertions.assertEquals(expectedItemsCount, output.total());
+        Assertions.assertEquals(expectedCustomers, output.items());
+        Assertions.assertEquals(expectedPage, output.currentPage());
+        Assertions.assertEquals(expectedPerPage, output.perPage());
+    }
+
+    @Test
+    public void givenAValidCommand_whenGatewayThrowsException_shouldReturnTheException() {
+        // Arrange
+        final var expectedPage = 1;
+        final var expectedPerPage = 10;
+        final var query = SearchQuery.of(expectedPage, expectedPerPage, "", "name", "asc");
+        final var expectedErrorMessage = "Gateway error";
+        when(customerGateway.getAll(query)).thenThrow(new IllegalStateException(expectedErrorMessage));
+
+        // Act
+        final var exception = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(query));
+
+        // Assert
+        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
