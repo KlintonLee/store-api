@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.klinton.store.infrastructure.utils.RepositoryUtils.like;
+
 @Component
 public class AdminPostgresSqlGateway implements AdminGateway {
 
@@ -61,13 +63,5 @@ public class AdminPostgresSqlGateway implements AdminGateway {
                 pageResult.getTotalElements(),
                 pageResult.map(AdminJpaEntity::toAggregate).toList()
         );
-    }
-
-    private Specification<AdminJpaEntity> like(final String columnName, final String term) {
-        if (term == null) return null;
-
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(
-                criteriaBuilder.upper(root.get(columnName)),
-                "%" + term.toUpperCase() + "%");
     }
 }
