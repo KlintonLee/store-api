@@ -11,7 +11,7 @@ import com.klinton.store.domain.pagination.Pagination;
 import com.klinton.store.domain.pagination.SearchQuery;
 import com.klinton.store.infrastructure.admin.presenter.AdminApiPresenter;
 import com.klinton.store.infrastructure.admin.dto.CreateAdminDto;
-import com.klinton.store.infrastructure.admin.presenter.GetAdminOutput;
+import com.klinton.store.infrastructure.admin.presenter.GetAdminResponse;
 import com.klinton.store.infrastructure.admin.dto.UpdateAdminDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,13 +58,13 @@ public class AdminController implements AdminApi {
     }
 
     @Override
-    public Pagination<?> listCategories(String search, int page, int perPage, String sort, String direction) {
+    public Pagination<?> listAdmins(String search, int page, int perPage, String sort, String direction) {
         final var query = SearchQuery.of(page, perPage, search, sort, direction);
         return listAdminsUseCase.execute(query);
     }
 
     @Override
-    public GetAdminOutput getAdminById(String id) {
+    public GetAdminResponse getAdminById(String id) {
         return AdminApiPresenter.present(getAdminByIdUseCase.execute(id));
     }
 

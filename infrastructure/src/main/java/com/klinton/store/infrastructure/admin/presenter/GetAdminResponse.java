@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
 
-public record GetAdminOutput(
+public record GetAdminResponse(
         @JsonProperty("id") String id,
         @JsonProperty("name") String name,
         @JsonProperty("email") String email,

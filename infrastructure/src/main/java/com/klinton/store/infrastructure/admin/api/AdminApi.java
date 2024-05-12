@@ -2,7 +2,7 @@ package com.klinton.store.infrastructure.admin.api;
 
 import com.klinton.store.domain.pagination.Pagination;
 import com.klinton.store.infrastructure.admin.dto.CreateAdminDto;
-import com.klinton.store.infrastructure.admin.presenter.GetAdminOutput;
+import com.klinton.store.infrastructure.admin.presenter.GetAdminResponse;
 import com.klinton.store.infrastructure.admin.dto.UpdateAdminDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,7 +34,7 @@ public interface AdminApi {
             @ApiResponse(responseCode = "200", description = "Listed successfully"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
-    Pagination<?> listCategories(
+    Pagination<?> listAdmins(
             @RequestParam(name = "search", required = false, defaultValue = "") final String search,
             @RequestParam(name = "page", required = false, defaultValue = "0") final int page,
             @RequestParam(name = "perPage", required = false, defaultValue = "10") final int perPage,
@@ -52,7 +52,7 @@ public interface AdminApi {
             @ApiResponse(responseCode = "404", description = "Admin was not found"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
     })
-    GetAdminOutput getAdminById(@PathVariable String id);
+    GetAdminResponse getAdminById(@PathVariable String id);
 
     @PutMapping(
             value = "{id}",
