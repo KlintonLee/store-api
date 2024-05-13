@@ -40,7 +40,7 @@ public class GetAddressUseCaseTest {
 
     @Test
     public void givenAValidAddressId_whenCallGetAddress_thenShouldReturnAddress() {
-        // Given
+        // Arrange
         final var address = Address.create(
                 "any_customer_id",
                 EXPECTED_STREET,
@@ -52,10 +52,10 @@ public class GetAddressUseCaseTest {
         );
         when(addressGateway.getById(address.getId())).thenReturn(Optional.of(address));
 
-        // When
+        // Act
         final var result = useCase.execute(address.getId().getValue());
 
-        // Then
+        // Assert
         assertEquals(address.getId().getValue(), result.id());
         assertEquals(address.getCustomerId(), result.customerId());
         assertEquals(EXPECTED_STREET, result.street());
@@ -68,29 +68,29 @@ public class GetAddressUseCaseTest {
 
     @Test
     public void givenANonExistingId_whenCallGetAddress_thenShouldThrowNotFoundException() {
-        // Given
+        // Arrange
         final var addressId = AddressId.from( "non_existing_id");
         when(addressGateway.getById(addressId)).thenReturn(Optional.empty());
         final var expectedErrorMessage = "Address with ID non_existing_id was not found.";
 
-        // When
+        // Act
         final var exception = assertThrows(NotFoundException.class, () -> useCase.execute(addressId.getValue()));
 
-        // Then
+        // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
     @Test
     public void givenAValidId_whenGatewayThrowsException_thenShouldReturnTheException() {
-        // Given
+        // Arrange
         final var addressId = AddressId.from( "any_address_id");
         final var expectedErrorMessage = "Gateway error";
         when(addressGateway.getById(addressId)).thenThrow(new IllegalStateException(expectedErrorMessage));
 
-        // When
+        // Act
         final var exception = assertThrows(IllegalStateException.class, () -> useCase.execute(addressId.getValue()));
 
-        // Then
+        // Assert
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }
