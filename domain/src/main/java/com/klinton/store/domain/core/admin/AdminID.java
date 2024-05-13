@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class AdminID extends Identifier {
 
-    private String value;
+    private final String value;
 
     public AdminID(String value) {
         this.value = value;
