@@ -6,6 +6,8 @@ import com.klinton.store.domain.core.address.AddressGateway;
 import com.klinton.store.domain.core.customer.Customer;
 import com.klinton.store.domain.core.customer.CustomerGateway;
 import com.klinton.store.domain.core.customer.CustomerID;
+import com.klinton.store.domain.exception.UnprocessableEntityException;
+import com.klinton.store.domain.validation.Notification;
 
 import java.util.Objects;
 
@@ -23,9 +25,6 @@ public class DefaultCreateAddressUseCase extends CreateAddressUseCase {
     @Override
     public CreateAddressOutput execute(CreateAddressCommand command) {
         final var customerId = CustomerID.from(command.customerId());
-        customerGateway.getById(customerId)
-                .orElseThrow(Utils.notFound(customerId, Customer.class));
-
         final var address = Address.create(
                 customerId.getValue(),
                 command.street(),
@@ -35,6 +34,17 @@ public class DefaultCreateAddressUseCase extends CreateAddressUseCase {
                 command.number(),
                 command.zipCode()
         );
+
+        final var notification = Notification.create();
+        address.validate(notification);
+
+        if (notification.hasError()) {
+            final var errorMessage = Utils.mountErrorMessage(notification);
+            throw new UnprocessableEntityException(errorMessage);
+        }
+
+        customerGateway.getById(customerId)
+                .orElseThrow(Utils.notFound(customerId, Customer.class));
 
         return CreateAddressOutput.from(addressGateway.save(address));
     }
