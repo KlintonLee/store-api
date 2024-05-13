@@ -5,6 +5,8 @@ import com.klinton.store.domain.validation.ValidationHandler;
 
 public class Address extends AggregateRoot<AddressId> {
 
+    private String customerId;
+
     private String street;
 
     private String city;
@@ -19,6 +21,7 @@ public class Address extends AggregateRoot<AddressId> {
 
     protected Address(
             final AddressId addressId,
+            final String customerId,
             final String street,
             final String city,
             final String neighborhood,
@@ -27,6 +30,7 @@ public class Address extends AggregateRoot<AddressId> {
             final String zipCode
     ) {
         super(addressId);
+        this.customerId = customerId;
         this.street = street;
         this.city = city;
         this.neighborhood = neighborhood;
@@ -36,6 +40,7 @@ public class Address extends AggregateRoot<AddressId> {
     }
 
     public static Address create(
+            final String customerId,
             final String street,
             final String city,
             final String neighborhood,
@@ -44,7 +49,7 @@ public class Address extends AggregateRoot<AddressId> {
             final String zipCode
     ) {
         var addressId = AddressId.unique();
-        return new Address(addressId, street, city, neighborhood, state, number, zipCode);
+        return new Address(addressId, customerId, street, city, neighborhood, state, number, zipCode);
     }
 
     @Override
@@ -53,6 +58,7 @@ public class Address extends AggregateRoot<AddressId> {
     }
 
     public Address update(
+            final String customerId,
             final String street,
             final String city,
             final String neighborhood,
@@ -60,6 +66,7 @@ public class Address extends AggregateRoot<AddressId> {
             final String number,
             final String zipCode
     ) {
+        this.customerId = customerId;
         this.street = street;
         this.city = city;
         this.neighborhood = neighborhood;
@@ -67,6 +74,10 @@ public class Address extends AggregateRoot<AddressId> {
         this.number = number;
         this.zipCode = zipCode;
         return this;
+    }
+
+    public String getCustomerId() {
+        return customerId;
     }
 
     public String getStreet() {

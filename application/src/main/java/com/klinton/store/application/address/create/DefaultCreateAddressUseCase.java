@@ -21,18 +21,19 @@ public class DefaultCreateAddressUseCase extends CreateAddressUseCase {
     }
 
     @Override
-    public CreateAddressOutput execute(CreateAddressCommand input) {
-        final var customerId = CustomerID.from(input.customerId());
+    public CreateAddressOutput execute(CreateAddressCommand command) {
+        final var customerId = CustomerID.from(command.customerId());
         customerGateway.getById(customerId)
                 .orElseThrow(Utils.notFound(customerId, Customer.class));
 
         final var address = Address.create(
-                input.street(),
-                input.city(),
-                input.neighborhood(),
-                input.state(),
-                input.number(),
-                input.zipCode()
+                customerId.getValue(),
+                command.street(),
+                command.city(),
+                command.neighborhood(),
+                command.state(),
+                command.number(),
+                command.zipCode()
         );
 
         return CreateAddressOutput.from(addressGateway.save(address));

@@ -71,6 +71,7 @@ public class CreateAddressUseCaseTest {
 
         // Then
         verify(addressGateway, times(1)).save(argThat(address ->
+                Objects.equals(address.getCustomerId(), customerId.getValue()) &&
                 Objects.equals(address.getStreet(), EXPECTED_STREET) &&
                 Objects.equals(address.getCity(), EXPECTED_CITY) &&
                 Objects.equals(address.getNeighborhood(), EXPECTED_NEIGHBORHOOD) &&
