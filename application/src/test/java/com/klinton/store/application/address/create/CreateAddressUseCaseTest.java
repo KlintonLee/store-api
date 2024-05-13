@@ -4,6 +4,8 @@ import com.klinton.store.domain.core.address.AddressGateway;
 import com.klinton.store.domain.core.address.States;
 import com.klinton.store.domain.core.customer.Customer;
 import com.klinton.store.domain.core.customer.CustomerGateway;
+import com.klinton.store.domain.exception.NotFoundException;
+import com.klinton.store.domain.exception.UnprocessableEntityException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Objects;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -81,6 +85,48 @@ public class CreateAddressUseCaseTest {
         )));
     }
 
+    @Test
+    public void givenACommandWithNonExistingCustomer_whenCallCreateAddress_thenShouldThrowNotFoundException() {
+        // Given
+        final var customerId = "non_existing_customer_id";
+        final var command = CreateAddressCommand.from(
+                customerId,
+                EXPECTED_STREET,
+                EXPECTED_CITY,
+                EXPECTED_NEIGHBORHOOD,
+                States.AP,
+                EXPECTED_NUMBER,
+                EXPECTED_ZIP_CODE
+        );
+        final var expectedErrorMessage = "Customer with ID non_existing_customer_id was not found.";
+        when(customerGateway.getById(any())).thenReturn(Optional.empty());
+        // When
+        final var exception = assertThrows(NotFoundException.class, () -> useCase.execute(command));
 
+        // Then
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 
+    @Test
+    public void givenACommandWithNullStreet_whenCallCreateAddress_thenShouldThrowUnprocessableEntityException() {
+        // Given
+        final var customer = Customer.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECT_PHONE);
+        final var customerId = customer.getId();
+        final var command = CreateAddressCommand.from(
+                customerId.getValue(),
+                null,
+                EXPECTED_CITY,
+                EXPECTED_NEIGHBORHOOD,
+                States.AP,
+                EXPECTED_NUMBER,
+                EXPECTED_ZIP_CODE
+        );
+        final var expectedErrorMessage = "Street name should not be null or empty";
+
+        // When
+        final var exception = assertThrows(UnprocessableEntityException.class, () -> useCase.execute(command));
+
+        // Then
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
