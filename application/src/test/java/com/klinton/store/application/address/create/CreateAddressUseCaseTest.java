@@ -129,4 +129,28 @@ public class CreateAddressUseCaseTest {
         // Then
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
+
+    @Test
+    public void givenAValidCommand_whenGatewayThrowsUnexpectedException_thenShouldThrowException() {
+        // Given
+        final var customer = Customer.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECT_PHONE);
+        final var customerId = customer.getId();
+        final var command = CreateAddressCommand.from(
+                customerId.getValue(),
+                EXPECTED_STREET,
+                EXPECTED_CITY,
+                EXPECTED_NEIGHBORHOOD,
+                States.AP,
+                EXPECTED_NUMBER,
+                EXPECTED_ZIP_CODE
+        );
+        final var expectedErrorMessage = "Gateway Error";
+        when(customerGateway.getById(customerId)).thenReturn(Optional.of(customer));
+        when(addressGateway.save(any())).thenThrow(new IllegalStateException(expectedErrorMessage));
+        // When
+        final var exception = assertThrows(IllegalStateException.class, () -> useCase.execute(command));
+
+        // Then
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
 }
