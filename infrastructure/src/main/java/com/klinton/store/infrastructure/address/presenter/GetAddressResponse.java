@@ -7,10 +7,10 @@ public record GetAddressResponse(
         @JsonProperty("id") String id,
         @JsonProperty("customer_id") String customerId,
         @JsonProperty("street") String street,
-        @JsonProperty("city") String city,
-        @JsonProperty("neighborhood") String neighborhood,
-        @JsonProperty("state") States state,
         @JsonProperty("number") String number,
+        @JsonProperty("neighborhood") String neighborhood,
+        @JsonProperty("city") String city,
+        @JsonProperty("state") States state,
         @JsonProperty("zip_code") String zipCode
 ) {
 }
