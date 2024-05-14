@@ -1,6 +1,9 @@
 package com.klinton.store.infrastructure.address.api;
 
 import com.klinton.store.domain.pagination.Pagination;
+import com.klinton.store.infrastructure.address.dto.CreateAddressDto;
+import com.klinton.store.infrastructure.address.dto.UpdateAddressDto;
+import com.klinton.store.infrastructure.address.presenter.GetAddressResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
