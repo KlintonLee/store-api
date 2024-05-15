@@ -1,9 +1,12 @@
 package com.klinton.store.domain.core.customer;
 
 import com.klinton.store.domain.AggregateRoot;
+import com.klinton.store.domain.core.address.Address;
 import com.klinton.store.domain.validation.ValidationHandler;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Customer extends AggregateRoot<CustomerID> {
 
@@ -16,6 +19,8 @@ public class Customer extends AggregateRoot<CustomerID> {
     private String phone;
 
     private boolean active;
+
+    private List<Address> addresses;
 
     private Instant createdAt;
 
@@ -30,6 +35,7 @@ public class Customer extends AggregateRoot<CustomerID> {
             final String password,
             final String phone,
             final boolean active,
+            final List<Address> addresses,
             final Instant createdAt,
             final Instant updatedAt,
             final Instant deletedAt
@@ -40,6 +46,7 @@ public class Customer extends AggregateRoot<CustomerID> {
         this.password = password;
         this.phone = phone;
         this.active = active;
+        this.addresses = addresses;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -49,7 +56,18 @@ public class Customer extends AggregateRoot<CustomerID> {
         var customerId = CustomerID.unique();
         var now = Instant.now();
 
-        return new Customer(customerId, name, email, password, phone, true, now, now, null);
+        return new Customer(
+                customerId,
+                name,
+                email,
+                password,
+                phone,
+                true,
+                new ArrayList<Address>(),
+                now,
+                now,
+                null
+        );
     }
 
     public static Customer with(
@@ -59,11 +77,23 @@ public class Customer extends AggregateRoot<CustomerID> {
             final String password,
             final String phone,
             final boolean active,
+            final List<Address> addresses,
             final Instant createdAt,
             final Instant updatedAt,
             final Instant deletedAt
     ) {
-        return new Customer(customerID, name, email, password, phone, active, createdAt, updatedAt, deletedAt);
+        return new Customer(
+                customerID,
+                name,
+                email,
+                password,
+                phone,
+                active,
+                addresses,
+                createdAt,
+                updatedAt,
+                deletedAt
+        );
     }
 
     @Override
@@ -137,6 +167,14 @@ public class Customer extends AggregateRoot<CustomerID> {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 
     public Instant getCreatedAt() {
