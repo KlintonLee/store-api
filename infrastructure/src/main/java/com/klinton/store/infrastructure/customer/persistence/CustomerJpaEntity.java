@@ -1,13 +1,13 @@
 package com.klinton.store.infrastructure.customer.persistence;
 
+import com.klinton.store.domain.core.address.Address;
 import com.klinton.store.domain.core.customer.Customer;
 import com.klinton.store.domain.core.customer.CustomerID;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.klinton.store.infrastructure.address.persistence.AddressJpaEntity;
+import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Table(name = "customers")
 @Entity(name = "Customer")
@@ -32,6 +32,9 @@ public class CustomerJpaEntity {
     @Column(name = "active")
     private boolean active;
 
+    @OneToMany(mappedBy = "customerId", fetch = FetchType.EAGER)
+    private List<AddressJpaEntity> addresses;
+
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP")
     private Instant createdAt;
 
@@ -50,6 +53,7 @@ public class CustomerJpaEntity {
             final String password,
             final String phone,
             final boolean active,
+            final List<AddressJpaEntity> addresses,
             final Instant createdAt,
             final Instant updatedAt,
             final Instant deletedAt
@@ -73,6 +77,7 @@ public class CustomerJpaEntity {
                 customer.getPassword(),
                 customer.getPhone(),
                 customer.isActive(),
+                List.of(),
                 customer.getCreatedAt(),
                 customer.getUpdatedAt(),
                 customer.getDeletedAt()
@@ -80,6 +85,10 @@ public class CustomerJpaEntity {
     }
 
     public Customer toAggregate() {
+        final var addresses = getAddresses() == null ? List.<Address>of() : getAddresses()
+                .stream()
+                .map(AddressJpaEntity::toAggregate)
+                .toList();
         return Customer.with(
                 CustomerID.from(getId()),
                 getName(),
@@ -87,6 +96,7 @@ public class CustomerJpaEntity {
                 getPassword(),
                 getPhone(),
                 isActive(),
+                addresses,
                 getCreatedAt(),
                 getUpdatedAt(),
                 getDeletedAt()
@@ -115,6 +125,10 @@ public class CustomerJpaEntity {
 
     public boolean isActive() {
         return active;
+    }
+
+    public List<AddressJpaEntity> getAddresses() {
+        return addresses;
     }
 
     public Instant getCreatedAt() {

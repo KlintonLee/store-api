@@ -12,7 +12,6 @@ public class AddressJpaEntity {
     @Id
     private String id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     private String customerId;
 
