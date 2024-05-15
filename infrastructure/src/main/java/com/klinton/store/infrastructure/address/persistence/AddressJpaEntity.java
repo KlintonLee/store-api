@@ -13,6 +13,7 @@ public class AddressJpaEntity {
     private String id;
 
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    @Column(name = "customer_id", nullable = false)
     private String customerId;
 
     @Column(name = "street")
