@@ -8,7 +8,7 @@ import java.time.Instant;
 public record GetPurchaseByIdOutput(
         String id,
         String customerId,
-        String AddressId,
+        String addressId,
         Instant purchaseDate,
         double totalPrice,
         String paymentMethod,
