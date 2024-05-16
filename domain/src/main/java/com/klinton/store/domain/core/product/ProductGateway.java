@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ProductGateway {
 
-    Product create(Product product);
+    Product save(Product product);
 
     Optional<Product> getById(ProductID productID);
 
