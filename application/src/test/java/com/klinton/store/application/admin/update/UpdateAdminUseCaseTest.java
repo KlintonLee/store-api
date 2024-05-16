@@ -32,7 +32,7 @@ public class UpdateAdminUseCaseTest {
     private AdminGateway adminGateway;
 
     @Test
-    public void givenAValidCommand_whenCallUpdateAdminUseCase_shouldReturnVoid() {
+    public void givenAValidCommand_whenCallUpdateAdminUseCase_shouldReturnVoid() throws InterruptedException {
         // Arrange
         final var admin = Admin.create("Jane Doe", "jane.doe@fake_email.com", "654321", false);
         final var adminId = admin.getId();
@@ -44,6 +44,7 @@ public class UpdateAdminUseCaseTest {
         when(adminGateway.save(any())).thenAnswer(returnsFirstArg());
 
         // Act
+        Thread.sleep(1);
         final var output = useCase.execute(command);
 
         // Assert
