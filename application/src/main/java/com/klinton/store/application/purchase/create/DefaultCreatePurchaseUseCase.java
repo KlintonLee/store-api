@@ -40,7 +40,7 @@ public class DefaultCreatePurchaseUseCase extends CreatePurchaseUseCase {
         addressGateway.getById(addressId)
                 .orElseThrow(Utils.notFound(addressId, Address.class));
 
-        final var purchase = Purchase.create(
+        final var purchase = Purchase.with(
                 command.customerId(),
                 command.addressId(),
                 command.totalPrice(),

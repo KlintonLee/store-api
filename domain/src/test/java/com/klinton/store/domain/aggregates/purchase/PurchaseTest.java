@@ -4,8 +4,6 @@ import com.klinton.store.domain.core.purchase.Purchase;
 import com.klinton.store.domain.core.purchase.PurchaseStatus;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -25,7 +23,7 @@ public class PurchaseTest {
     @Test
     public void givenValidParams_whenCallPurchaseCreate_thenShouldReturnANewOne() {
         // Act
-        final var purchase = Purchase.create(CUSTOMER_ID, ADDRESS_ID, TOTAL, PAYMENT_METHOD, STATUS);
+        final var purchase = Purchase.with(CUSTOMER_ID, ADDRESS_ID, TOTAL, PAYMENT_METHOD, STATUS);
 
         // Assert
         assertNotNull(purchase);

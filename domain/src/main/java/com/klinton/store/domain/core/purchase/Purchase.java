@@ -12,17 +12,17 @@ public class Purchase extends ValueObject {
 
     private final String customerId;
 
-    private final String AddressId;
+    private String AddressId;
 
-    private final Instant purchaseDate;
+    private Instant purchaseDate;
 
-    private final double totalPrice;
+    private double totalPrice;
 
-    private final String paymentMethod;
+    private String paymentMethod;
 
-    private final PurchaseStatus status;
+    private PurchaseStatus status;
 
-    private final Instant updatedAt;
+    private Instant updatedAt;
 
     protected Purchase(
             final String id,
@@ -44,7 +44,7 @@ public class Purchase extends ValueObject {
         this.updatedAt = Objects.requireNonNull(updatedAt);
     }
 
-    public static Purchase create(
+    public static Purchase with(
             final String customerId,
             final String AddressId,
             final double totalPrice,
@@ -56,7 +56,7 @@ public class Purchase extends ValueObject {
         return new Purchase(id, customerId, AddressId, now, totalPrice, paymentMethod, status, now);
     }
 
-    public static Purchase create(
+    public static Purchase with(
             final String id,
             final String customerId,
             final String AddressId,
@@ -67,6 +67,19 @@ public class Purchase extends ValueObject {
             final Instant updatedAt
     ) {
         return new Purchase(id, customerId, AddressId, purchaseDate, totalPrice, paymentMethod, status, updatedAt);
+    }
+
+    public void update(
+            final String AddressId,
+            final double totalPrice,
+            final String paymentMethod,
+            final PurchaseStatus status
+    ) {
+        this.AddressId = Objects.requireNonNull(AddressId);
+        this.totalPrice = totalPrice;
+        this.paymentMethod = Objects.requireNonNull(paymentMethod);
+        this.status = Objects.requireNonNull(status);
+        this.updatedAt = Instant.now();
     }
 
     public String id() {
