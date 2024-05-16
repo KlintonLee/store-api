@@ -67,13 +67,4 @@ public interface PurchaseApi {
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
     })
     ResponseEntity<?> updatePurchase(@PathVariable String id, @RequestBody UpdatePurchaseDto dto);
-
-    @DeleteMapping(value = "{id}")
-    @Operation(summary = "Delete a Purchase by it's identifier")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Purchase was not found"),
-            @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
-    })
-    ResponseEntity<?> deletePurchase(@PathVariable String id);
 }
