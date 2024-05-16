@@ -5,6 +5,7 @@ import com.klinton.store.domain.core.address.AddressGateway;
 import com.klinton.store.domain.core.customer.Customer;
 import com.klinton.store.domain.core.customer.CustomerGateway;
 import com.klinton.store.domain.core.purchase.PurchaseGateway;
+import com.klinton.store.domain.core.purchase.PurchaseStatus;
 import com.klinton.store.domain.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,11 +30,11 @@ public class CreatePurchaseTest {
 
     private static final String ADDRESS_ID = "address_id";
 
-    private static final Instant PURCHASE_DATE = Instant.now();
-
     private static final double TOTAL_PRICE = 10.0;
 
     private static final String PAYMENT_METHOD = "boleto";
+
+    private static final PurchaseStatus STATUS = PurchaseStatus.PENDING;
 
     @InjectMocks
     private DefaultCreatePurchaseUseCase createPurchaseUseCase;
@@ -53,9 +54,9 @@ public class CreatePurchaseTest {
         final var command = CreatePurchaseCommand.with(
                 CUSTOMER_ID,
                 ADDRESS_ID,
-                PURCHASE_DATE,
                 TOTAL_PRICE,
-                PAYMENT_METHOD
+                PAYMENT_METHOD,
+                STATUS
         );
         when(purchaseGateway.save(any())).thenAnswer(returnsFirstArg());
         when(customerGateway.getById(any())).thenReturn(Optional.ofNullable(mock(Customer.class)));
@@ -68,9 +69,10 @@ public class CreatePurchaseTest {
         verify(purchaseGateway, times(1)).save(argThat(purchase ->
                 Objects.equals(purchase.customerId(), CUSTOMER_ID) &&
                         Objects.equals(purchase.addressId(), ADDRESS_ID) &&
-                        Objects.equals(purchase.purchaseDate(), PURCHASE_DATE) &&
+                        Objects.nonNull(purchase.purchaseDate()) &&
                         purchase.totalPrice() == TOTAL_PRICE &&
-                        Objects.equals(purchase.paymentMethod(), PAYMENT_METHOD)
+                        Objects.equals(purchase.paymentMethod(), PAYMENT_METHOD) &&
+                        Objects.equals(purchase.status(), STATUS)
         ));
     }
 
@@ -80,9 +82,9 @@ public class CreatePurchaseTest {
         final var command = CreatePurchaseCommand.with(
                 CUSTOMER_ID,
                 ADDRESS_ID,
-                PURCHASE_DATE,
                 TOTAL_PRICE,
-                PAYMENT_METHOD
+                PAYMENT_METHOD,
+                STATUS
         );
         final var expectedErrorMessage = "Customer with ID customer_id was not found.";
         when(customerGateway.getById(any())).thenReturn(Optional.empty());
@@ -100,9 +102,9 @@ public class CreatePurchaseTest {
         final var command = CreatePurchaseCommand.with(
                 CUSTOMER_ID,
                 ADDRESS_ID,
-                PURCHASE_DATE,
                 TOTAL_PRICE,
-                PAYMENT_METHOD
+                PAYMENT_METHOD,
+                STATUS
         );
         final var expectedErrorMessage = "Address with ID address_id was not found.";
         when(customerGateway.getById(any())).thenReturn(Optional.ofNullable(mock(Customer.class)));

@@ -20,13 +20,19 @@ public class Purchase extends ValueObject {
 
     private final String paymentMethod;
 
+    private final PurchaseStatus status;
+
+    private final Instant updatedAt;
+
     protected Purchase(
             final String id,
             final String customerId,
             final String AddressId,
             final Instant purchaseDate,
             final double totalPrice,
-            final String paymentMethod
+            final String paymentMethod,
+            final PurchaseStatus status,
+            final Instant updatedAt
     ) {
         this.id = Objects.requireNonNull(id);
         this.customerId = Objects.requireNonNull(customerId);
@@ -34,28 +40,33 @@ public class Purchase extends ValueObject {
         this.purchaseDate = Objects.requireNonNull(purchaseDate);
         this.totalPrice = totalPrice;
         this.paymentMethod = Objects.requireNonNull(paymentMethod);
+        this.status = Objects.requireNonNull(status);
+        this.updatedAt = Objects.requireNonNull(updatedAt);
     }
 
-    public static Purchase with(
+    public static Purchase create(
             final String customerId,
             final String AddressId,
-            final Instant purchaseDate,
             final double totalPrice,
-            final String paymentMethod
+            final String paymentMethod,
+            final PurchaseStatus status
     ) {
         final var id = UUID.randomUUID().toString();
-        return new Purchase(id, customerId, AddressId, purchaseDate, totalPrice, paymentMethod);
+        final var now = Instant.now();
+        return new Purchase(id, customerId, AddressId, now, totalPrice, paymentMethod, status, now);
     }
 
-    public static Purchase with(
+    public static Purchase create(
             final String id,
             final String customerId,
             final String AddressId,
             final Instant purchaseDate,
             final double totalPrice,
-            final String paymentMethod
+            final String paymentMethod,
+            final PurchaseStatus status,
+            final Instant updatedAt
     ) {
-        return new Purchase(id, customerId, AddressId, purchaseDate, totalPrice, paymentMethod);
+        return new Purchase(id, customerId, AddressId, purchaseDate, totalPrice, paymentMethod, status, updatedAt);
     }
 
     public String id() {
@@ -80,5 +91,13 @@ public class Purchase extends ValueObject {
 
     public String paymentMethod() {
         return paymentMethod;
+    }
+
+    public PurchaseStatus status() {
+        return status;
+    }
+
+    public Instant updatedAt() {
+        return updatedAt;
     }
 }
