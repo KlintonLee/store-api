@@ -2,6 +2,7 @@ package com.klinton.store.application.product.delete;
 
 import com.klinton.store.domain.core.product.Product;
 import com.klinton.store.domain.core.product.ProductGateway;
+import com.klinton.store.domain.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Objects;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -55,5 +58,35 @@ public class DeleteProductUseCaseTest {
                 updatedAt.isBefore(p.getUpdatedAt()) &&
                 Objects.nonNull(p.getDeletedAt())
         ));
+    }
+
+    @Test
+    public void givenAnInvalidId_whenCallDeleteProductUseCase_thenShouldThrowANotFoundException() {
+        // Arrange
+        final var productId = "invalid_id";
+        when(productGateway.getById(any())).thenReturn(Optional.empty());
+        final var expectedErrorMessage = "Product with ID invalid_id was not found.";
+
+        // Act
+        final var exception = assertThrows(NotFoundException.class, () -> deleteProductUseCase.execute(productId));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
+    }
+
+    @Test
+    public void givenAValidId_whenGatewayThrowsException_thenShouldReturnTheException() {
+        // Arrange
+        final var expectedErrorMessage = "Gateway error";
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, true);
+        final var productId = product.getId().getValue();
+        when(productGateway.getById(any())).thenReturn(Optional.of(product));
+        when(productGateway.save(any())).thenThrow(new IllegalStateException(expectedErrorMessage));
+
+        // Act
+        final var exception = assertThrows(IllegalStateException.class, () -> deleteProductUseCase.execute(productId));
+
+        // Assert
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 }
