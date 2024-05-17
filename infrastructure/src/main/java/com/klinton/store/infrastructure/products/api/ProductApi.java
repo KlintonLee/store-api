@@ -1,6 +1,9 @@
 package com.klinton.store.infrastructure.products.api;
 
 import com.klinton.store.domain.pagination.Pagination;
+import com.klinton.store.infrastructure.products.dto.CreateProductDto;
+import com.klinton.store.infrastructure.products.dto.UpdateProductDto;
+import com.klinton.store.infrastructure.products.presenter.GetProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
