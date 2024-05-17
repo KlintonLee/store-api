@@ -7,7 +7,7 @@ public record CreateAdminCommand(
         boolean active
 ) {
 
-    public static CreateAdminCommand with(
+    public static CreateAdminCommand of(
             final String aName,
             final String anEmail,
             final String aPassword,

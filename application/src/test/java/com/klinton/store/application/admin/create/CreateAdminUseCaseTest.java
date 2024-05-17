@@ -34,7 +34,7 @@ public class CreateAdminUseCaseTest {
     @Test
     public void givenValidCommand_whenCallsCreateAdminExecute_ShouldCreateAdmin() {
         // Arrange
-        final var command = CreateAdminCommand.with(
+        final var command = CreateAdminCommand.of(
                 EXPECTED_NAME,
                 EXPECTED_EMAIL,
                 EXPECT_PASSWORD,
@@ -62,13 +62,13 @@ public class CreateAdminUseCaseTest {
     public void givenACommandWithNullOrEmptyName_whenCallCreateAdminExecute_ShouldThrowUnprocessableEntityException() {
         // Arrange
         final var expectedErrorMessage = "Name should not be null or empty";
-        final var nullNameCommand = CreateAdminCommand.with(
+        final var nullNameCommand = CreateAdminCommand.of(
                 null,
                 EXPECTED_EMAIL,
                 EXPECT_PASSWORD,
                 EXPECTED_ACTIVE
         );
-        final var emptyNameCommand = CreateAdminCommand.with(
+        final var emptyNameCommand = CreateAdminCommand.of(
                 " ",
                 EXPECTED_EMAIL,
                 EXPECT_PASSWORD,
@@ -89,7 +89,7 @@ public class CreateAdminUseCaseTest {
     public void givenValidCommand_whenGatewayThrowsException_shouldReturnTheException() {
         // Arrange
         final var expectedErrorMessage = "Gateway error";
-        final var command = CreateAdminCommand.with(
+        final var command = CreateAdminCommand.of(
                 EXPECTED_NAME,
                 EXPECTED_EMAIL,
                 EXPECT_PASSWORD,

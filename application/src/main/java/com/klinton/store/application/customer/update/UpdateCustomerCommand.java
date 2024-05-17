@@ -7,7 +7,7 @@ public record UpdateCustomerCommand(
         String phone,
         boolean active
 ) {
-    public static UpdateCustomerCommand with(
+    public static UpdateCustomerCommand of(
             String id,
             String name,
             String email,

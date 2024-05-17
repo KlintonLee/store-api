@@ -58,7 +58,7 @@ public class UpdateAddressUseCaseTest {
                 "12345678"
         );
         final var addressId = address.getId();
-        final var command = UpdateAddressCommand.from(
+        final var command = UpdateAddressCommand.of(
                 addressId.getValue(),
                 EXPECTED_CUSTOMER_ID,
                 EXPECTED_STREET,
@@ -101,7 +101,7 @@ public class UpdateAddressUseCaseTest {
                 "12345678"
         );
         final var addressId = address.getId();
-        final var command = UpdateAddressCommand.from(
+        final var command = UpdateAddressCommand.of(
                 addressId.getValue(),
                 EXPECTED_CUSTOMER_ID,
                 null,
@@ -134,7 +134,7 @@ public class UpdateAddressUseCaseTest {
                 "12345678"
         );
         final var addressId = address.getId();
-        final var command = UpdateAddressCommand.from(
+        final var command = UpdateAddressCommand.of(
                 addressId.getValue(),
                 EXPECTED_CUSTOMER_ID,
                 EXPECTED_STREET,
@@ -167,7 +167,7 @@ public class UpdateAddressUseCaseTest {
                 "12345678"
         );
         final var addressId = address.getId();
-        final var command = UpdateAddressCommand.from(
+        final var command = UpdateAddressCommand.of(
                 addressId.getValue(),
                 EXPECTED_CUSTOMER_ID,
                 EXPECTED_STREET,
@@ -201,7 +201,7 @@ public class UpdateAddressUseCaseTest {
                 "12345678"
         );
         final var addressId = address.getId();
-        final var command = UpdateAddressCommand.from(
+        final var command = UpdateAddressCommand.of(
                 addressId.getValue(),
                 EXPECTED_CUSTOMER_ID,
                 EXPECTED_STREET,

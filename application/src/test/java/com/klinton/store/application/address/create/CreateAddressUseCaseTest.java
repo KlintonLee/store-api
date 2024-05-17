@@ -59,7 +59,7 @@ public class CreateAddressUseCaseTest {
         // Given
         final var customer = Customer.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECT_PHONE);
         final var customerId = customer.getId();
-        final var command = CreateAddressCommand.from(
+        final var command = CreateAddressCommand.of(
                 customerId.getValue(),
                 EXPECTED_STREET,
                 EXPECTED_CITY,
@@ -89,7 +89,7 @@ public class CreateAddressUseCaseTest {
     public void givenACommandWithNonExistingCustomer_whenCallCreateAddress_thenShouldThrowNotFoundException() {
         // Given
         final var customerId = "non_existing_customer_id";
-        final var command = CreateAddressCommand.from(
+        final var command = CreateAddressCommand.of(
                 customerId,
                 EXPECTED_STREET,
                 EXPECTED_CITY,
@@ -112,7 +112,7 @@ public class CreateAddressUseCaseTest {
         // Given
         final var customer = Customer.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECT_PHONE);
         final var customerId = customer.getId();
-        final var command = CreateAddressCommand.from(
+        final var command = CreateAddressCommand.of(
                 customerId.getValue(),
                 null,
                 EXPECTED_CITY,
@@ -135,7 +135,7 @@ public class CreateAddressUseCaseTest {
         // Given
         final var customer = Customer.create(EXPECTED_NAME, EXPECTED_EMAIL, EXPECT_PASSWORD, EXPECT_PHONE);
         final var customerId = customer.getId();
-        final var command = CreateAddressCommand.from(
+        final var command = CreateAddressCommand.of(
                 customerId.getValue(),
                 EXPECTED_STREET,
                 EXPECTED_CITY,

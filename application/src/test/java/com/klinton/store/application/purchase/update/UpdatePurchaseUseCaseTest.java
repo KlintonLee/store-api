@@ -54,7 +54,7 @@ public class UpdatePurchaseUseCaseTest {
         when(addressGateway.getById(AddressId.from(ADDRESS_ID))).thenReturn(Optional.of(mock(Address.class)));
         when(purchaseGateway.save(any())).thenAnswer(returnsFirstArg());
 
-        final var command = UpdatePurchaseCommand.with(
+        final var command = UpdatePurchaseCommand.of(
                 purchaseId,
                 ADDRESS_ID,
                 TOTAL_PRICE,
@@ -82,7 +82,7 @@ public class UpdatePurchaseUseCaseTest {
         final var purchaseId = purchase.id();
         when(purchaseGateway.getByID(PurchaseId.from(purchaseId))).thenReturn(Optional.empty());
         final var expectedErrorMessage = "Purchase with ID %s was not found.".formatted(purchaseId);
-        final var command = UpdatePurchaseCommand.with(
+        final var command = UpdatePurchaseCommand.of(
                 purchaseId,
                 ADDRESS_ID,
                 TOTAL_PRICE,
@@ -105,7 +105,7 @@ public class UpdatePurchaseUseCaseTest {
         when(purchaseGateway.getByID(PurchaseId.from(purchaseId))).thenReturn(Optional.of(purchase));
         when(addressGateway.getById(AddressId.from(ADDRESS_ID))).thenReturn(Optional.empty());
         final var expectedErrorMessage = "Address with ID address_id was not found.";
-        final var command = UpdatePurchaseCommand.with(
+        final var command = UpdatePurchaseCommand.of(
                 purchaseId,
                 ADDRESS_ID,
                 TOTAL_PRICE,
@@ -131,7 +131,7 @@ public class UpdatePurchaseUseCaseTest {
         final var expectedErrorMessage = "Gateway Error";
         when(purchaseGateway.save(any())).thenThrow(new IllegalStateException(expectedErrorMessage));
 
-        final var command = UpdatePurchaseCommand.with(
+        final var command = UpdatePurchaseCommand.of(
                 purchaseId,
                 ADDRESS_ID,
                 TOTAL_PRICE,

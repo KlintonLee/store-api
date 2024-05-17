@@ -37,6 +37,6 @@ public class DefaultUpdateAdminUseCase extends UpdateAdminUseCase {
         }
 
         adminGateway.save(admin);
-        return new UpdateAdminOutput(adminId.getValue());
+        return UpdateAdminOutput.from(adminId.getValue());
     }
 }

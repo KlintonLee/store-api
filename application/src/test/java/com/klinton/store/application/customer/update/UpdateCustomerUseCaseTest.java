@@ -41,7 +41,7 @@ public class UpdateCustomerUseCaseTest {
         final var customerId = customer.getId();
         final var createdAt = customer.getCreatedAt();
         final var updatedAt = customer.getUpdatedAt();
-        final var command = UpdateCustomerCommand.with(
+        final var command = UpdateCustomerCommand.of(
                 customerId.getValue(),
                 EXPECTED_NAME,
                 EXPECTED_EMAIL,
@@ -77,7 +77,7 @@ public class UpdateCustomerUseCaseTest {
         final var customerId = customer.getId();
         final var expectedErrorMessage = "Name should not be null or empty";
 
-        final var command = UpdateCustomerCommand.with(
+        final var command = UpdateCustomerCommand.of(
                 customerId.getValue(),
                 null,
                 EXPECTED_EMAIL,
@@ -99,7 +99,7 @@ public class UpdateCustomerUseCaseTest {
         // Arrange
         final var customerId = "invalid_id";
         final var expectedErrorMessage = "Customer with ID invalid_id was not found.";
-        final var command = UpdateCustomerCommand.with(
+        final var command = UpdateCustomerCommand.of(
                 customerId,
                 EXPECTED_NAME,
                 EXPECTED_EMAIL,
@@ -119,7 +119,7 @@ public class UpdateCustomerUseCaseTest {
         // Arrange
         final var customer = Customer.create("JANE DOE", "jane.doe@fake_email.com", EXPECT_PASSWORD, "987654321");
         final var customerId = customer.getId();
-        final var command = UpdateCustomerCommand.with(
+        final var command = UpdateCustomerCommand.of(
                 customerId.getValue(),
                 EXPECTED_NAME,
                 EXPECTED_EMAIL,

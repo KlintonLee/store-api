@@ -2,8 +2,6 @@ package com.klinton.store.application.purchase.create;
 
 import com.klinton.store.domain.core.purchase.PurchaseStatus;
 
-import java.time.Instant;
-
 public record CreatePurchaseCommand(
         String customerId,
         String addressId,
@@ -12,7 +10,7 @@ public record CreatePurchaseCommand(
         PurchaseStatus status
 ) {
 
-    public static CreatePurchaseCommand with(
+    public static CreatePurchaseCommand of(
             final String customerId,
             final String addressId,
             final double totalPrice,

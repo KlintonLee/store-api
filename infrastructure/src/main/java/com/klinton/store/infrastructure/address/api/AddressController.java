@@ -49,7 +49,7 @@ public class AddressController implements AddressApi {
 
     @Override
     public ResponseEntity<?> createAddress(CreateAddressDto input) {
-        final var command = CreateAddressCommand.from(
+        final var command = CreateAddressCommand.of(
                 input.customerId(),
                 input.street(),
                 input.city(),
@@ -76,7 +76,7 @@ public class AddressController implements AddressApi {
 
     @Override
     public ResponseEntity<?> updateAddress(String id, UpdateAddressDto input) {
-        final var command = UpdateAddressCommand.from(
+        final var command = UpdateAddressCommand.of(
                 id,
                 input.customerId(),
                 input.street(),

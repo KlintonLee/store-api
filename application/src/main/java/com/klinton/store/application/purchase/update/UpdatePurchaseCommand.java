@@ -9,7 +9,7 @@ public record UpdatePurchaseCommand(
         String paymentMethod,
         PurchaseStatus status
 ) {
-    public static UpdatePurchaseCommand with(
+    public static UpdatePurchaseCommand of(
             String purchaseId,
             String addressId,
             double totalPrice,

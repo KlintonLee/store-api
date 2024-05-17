@@ -48,6 +48,6 @@ public class DefaultCreatePurchaseUseCase extends CreatePurchaseUseCase {
                 command.status()
         );
 
-        return CreatePurchaseOutput.with(purchaseGateway.save(purchase));
+        return CreatePurchaseOutput.from(purchaseGateway.save(purchase));
     }
 }

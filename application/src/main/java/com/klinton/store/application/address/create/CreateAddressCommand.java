@@ -11,7 +11,7 @@ public record CreateAddressCommand(
         String number,
         String zipCode
 ) {
-    public static CreateAddressCommand from(
+    public static CreateAddressCommand of(
             String customerId,
             String street,
             String city,

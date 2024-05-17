@@ -47,7 +47,7 @@ public class AdminController implements AdminApi {
 
     @Override
     public ResponseEntity<?> createAdmin(CreateAdminDto input) {
-        final var createCommand = CreateAdminCommand.with(
+        final var createCommand = CreateAdminCommand.of(
                 input.name(),
                 input.email(),
                 input.password(),
@@ -70,7 +70,7 @@ public class AdminController implements AdminApi {
 
     @Override
     public ResponseEntity<?> updateAdmin(String id, UpdateAdminDto input) {
-        final var updateCommand = UpdateAdminCommand.with(
+        final var updateCommand = UpdateAdminCommand.of(
                 id,
                 input.name(),
                 input.email(),

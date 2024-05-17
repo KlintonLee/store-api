@@ -12,7 +12,7 @@ public record UpdateAddressCommand(
         String number,
         String zipCode
 ) {
-    public static UpdateAddressCommand from(
+    public static UpdateAddressCommand of(
             String id,
             String customerId,
             String street,

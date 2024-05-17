@@ -36,7 +36,7 @@ public class CreateProductUseCaseTest {
     @Test
     public void givenAValidCommand_whenCallCreateProductUseCase_thenShouldCreateProduct() {
         // Arrange
-        final var command = CreateProductCommand.with(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var command = CreateProductCommand.of(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
         when(productGateway.save(any())).thenAnswer(returnsFirstArg());
 
         // Act
@@ -58,7 +58,7 @@ public class CreateProductUseCaseTest {
     @Test
     public void givenACommandWithNullName_whenCallCreateProduct_thenShouldThrowUnprocessableException() {
         // Arrange
-        final var command = CreateProductCommand.with(null, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var command = CreateProductCommand.of(null, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
         final var expectedErrorMessage = "Name should not be null or empty";
 
         // Act
@@ -72,7 +72,7 @@ public class CreateProductUseCaseTest {
     public void givenAValidCommand_whenGatewayThrowsUnexpectedException_thenShouldThrowException() {
         // Arrange
         final var expectedErrorMessage = "Gateway Error";
-        final var command = CreateProductCommand.with(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
+        final var command = CreateProductCommand.of(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE);
         when(productGateway.save(any())).thenThrow(new IllegalStateException(expectedErrorMessage));
 
         // Act

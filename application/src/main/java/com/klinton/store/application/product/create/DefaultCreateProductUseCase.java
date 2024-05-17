@@ -28,6 +28,6 @@ public class DefaultCreateProductUseCase extends CreateProductUseCase {
             throw new UnprocessableEntityException(errorMessage);
         }
 
-        return CreateProductOutput.with(productGateway.save(product));
+        return CreateProductOutput.from(productGateway.save(product));
     }
 }

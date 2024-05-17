@@ -45,7 +45,7 @@ public class PurchaseController implements PurchaseApi {
 
     @Override
     public ResponseEntity<?> createPurchase(CreatePurchaseDto dto) {
-        final var command = CreatePurchaseCommand.with(
+        final var command = CreatePurchaseCommand.of(
                 dto.customerId(),
                 dto.addressId(),
                 dto.totalPrice(),
@@ -69,7 +69,7 @@ public class PurchaseController implements PurchaseApi {
 
     @Override
     public ResponseEntity<?> updatePurchase(String id, UpdatePurchaseDto dto) {
-        final var command = UpdatePurchaseCommand.with(
+        final var command = UpdatePurchaseCommand.of(
                 id,
                 dto.addressId(),
                 dto.totalPrice(),

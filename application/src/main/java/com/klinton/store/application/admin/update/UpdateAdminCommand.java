@@ -7,7 +7,7 @@ public record UpdateAdminCommand(
         boolean active
 ) {
 
-    public static UpdateAdminCommand with(
+    public static UpdateAdminCommand of(
             final String id,
             final String name,
             final String email,

@@ -49,7 +49,7 @@ public class CustomerController implements CustomerApi {
 
     @Override
     public ResponseEntity<?> createCustomer(CreateCustomerDto input) {
-        final var command = CreateCustomerCommand.with(
+        final var command = CreateCustomerCommand.of(
                 input.name(),
                 input.email(),
                 input.password(),
@@ -72,7 +72,7 @@ public class CustomerController implements CustomerApi {
 
     @Override
     public ResponseEntity<?> updateCustomer(String id, UpdateCustomerDto input) {
-        final var command = UpdateCustomerCommand.with(
+        final var command = UpdateCustomerCommand.of(
                 id,
                 input.name(),
                 input.email(),

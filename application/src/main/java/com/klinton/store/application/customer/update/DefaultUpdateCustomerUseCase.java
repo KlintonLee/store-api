@@ -38,6 +38,6 @@ public class DefaultUpdateCustomerUseCase extends UpdateCustomerUseCase {
         }
 
         final var updatedCustomer = customerGateway.save(customer);
-        return new UpdateCustomerOutput(updatedCustomer.getId().getValue());
+        return UpdateCustomerOutput.from(updatedCustomer.getId().getValue());
     }
 }

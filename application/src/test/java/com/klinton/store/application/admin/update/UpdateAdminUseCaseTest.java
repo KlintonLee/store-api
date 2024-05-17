@@ -39,7 +39,7 @@ public class UpdateAdminUseCaseTest {
         final var createdAt = admin.getCreatedAt();
         final var updatedAt = admin.getUpdatedAt();
 
-        final var command = UpdateAdminCommand.with(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECTED_ACTIVE);
+        final var command = UpdateAdminCommand.of(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECTED_ACTIVE);
         when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
         when(adminGateway.save(any())).thenAnswer(returnsFirstArg());
 
@@ -67,7 +67,7 @@ public class UpdateAdminUseCaseTest {
         final var adminId = admin.getId();
         final var expectedErrorMessage = "Name should not be null or empty";
 
-        final var command = UpdateAdminCommand.with(adminId.getValue(), null, EXPECTED_EMAIL, EXPECTED_ACTIVE);
+        final var command = UpdateAdminCommand.of(adminId.getValue(), null, EXPECTED_EMAIL, EXPECTED_ACTIVE);
         when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
 
         // Act
@@ -83,7 +83,7 @@ public class UpdateAdminUseCaseTest {
         final var adminId = "invalid_id";
         final var expectedErrorMessage = "Admin with ID invalid_id was not found.";
 
-        final var command = UpdateAdminCommand.with(adminId, null, EXPECTED_EMAIL, EXPECTED_ACTIVE);
+        final var command = UpdateAdminCommand.of(adminId, null, EXPECTED_EMAIL, EXPECTED_ACTIVE);
         when(adminGateway.getById(any())).thenReturn(Optional.empty());
 
         // Act
@@ -100,7 +100,7 @@ public class UpdateAdminUseCaseTest {
         final var adminId = admin.getId();
         final var expectedErrorMessage = "Gateway error";
 
-        final var command = UpdateAdminCommand.with(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECTED_ACTIVE);
+        final var command = UpdateAdminCommand.of(adminId.getValue(), EXPECTED_NAME, EXPECTED_EMAIL, EXPECTED_ACTIVE);
         when(adminGateway.getById(adminId)).thenReturn(Optional.of(admin));
         when(adminGateway.save(any())).thenThrow(new IllegalStateException(expectedErrorMessage));
 

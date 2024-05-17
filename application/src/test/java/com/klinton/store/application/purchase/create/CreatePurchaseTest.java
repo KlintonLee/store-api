@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -51,7 +50,7 @@ public class CreatePurchaseTest {
     @Test
     public void givenAValidCommand_whenCallCreatePurchase_thenShouldReturnPurchase() {
         // Arrange
-        final var command = CreatePurchaseCommand.with(
+        final var command = CreatePurchaseCommand.of(
                 CUSTOMER_ID,
                 ADDRESS_ID,
                 TOTAL_PRICE,
@@ -79,7 +78,7 @@ public class CreatePurchaseTest {
     @Test
     public void givenAnInvalidCustomerId_whenCallCreatePurchase_thenShouldReturnNotFoundException() {
         // Arrange
-        final var command = CreatePurchaseCommand.with(
+        final var command = CreatePurchaseCommand.of(
                 CUSTOMER_ID,
                 ADDRESS_ID,
                 TOTAL_PRICE,
@@ -99,7 +98,7 @@ public class CreatePurchaseTest {
     @Test
     public void givenAnInvalidAddressId_whenCallCreatePurchase_thenShouldReturnNotFoundException() {
         // Arrange
-        final var command = CreatePurchaseCommand.with(
+        final var command = CreatePurchaseCommand.of(
                 CUSTOMER_ID,
                 ADDRESS_ID,
                 TOTAL_PRICE,

@@ -6,7 +6,7 @@ public record CreateProductCommand(
         int quantity,
         double price
 ) {
-    public static CreateProductCommand with(
+    public static CreateProductCommand of(
             final String name,
             final String description,
             final int quantity,

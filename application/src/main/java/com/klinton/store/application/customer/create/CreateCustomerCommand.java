@@ -6,7 +6,7 @@ public record CreateCustomerCommand(
         String password,
         String phone
 ) {
-    public static CreateCustomerCommand with(
+    public static CreateCustomerCommand of(
             String name,
             String email,
             String password,
