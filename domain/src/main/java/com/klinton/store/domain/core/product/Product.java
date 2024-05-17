@@ -59,6 +59,20 @@ public class Product extends Entity<ProductID> {
         return new Product(id, name, description, quantity, price, active, now, now, deletedAt);
     }
 
+    public static Product from(
+            final ProductID id,
+            final String name,
+            final String description,
+            final int quantity,
+            final double price,
+            final boolean active,
+            final Instant createdAt,
+            final Instant updatedAt,
+            final Instant deletedAt
+    ) {
+        return new Product(id, name, description, quantity, price, active, createdAt, updatedAt, deletedAt);
+    }
+
     public void update(
             final String name,
             final String description,
