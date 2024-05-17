@@ -75,6 +75,21 @@ public class Product extends Entity<ProductID> {
         this.deletedAt = active ? null : Instant.now();
     }
 
+    public void deactivate() {
+        final var now = Instant.now();
+        this.active = false;
+        this.updatedAt = now;
+        if (this.deletedAt == null) {
+            this.deletedAt = now;
+        }
+    }
+
+    public void activate() {
+        this.active = true;
+        this.updatedAt = Instant.now();
+        this.deletedAt = null;
+    }
+
     public String getName() {
         return name;
     }
