@@ -36,7 +36,7 @@ public class DeleteProductUseCaseTest {
     private ProductGateway productGateway;
 
     @Test
-    public void givenAValidId_whenCallDeleteProductUseCase_thenShouldSoftDeleteIt() {
+    public void givenAValidId_whenCallDeleteProductUseCase_thenShouldSoftDeleteIt() throws InterruptedException {
         // Arrange
         final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, true);
         final var productId = product.getId();
@@ -45,6 +45,7 @@ public class DeleteProductUseCaseTest {
         when(productGateway.save(any())).thenAnswer(returnsFirstArg());
 
         // Act
+        Thread.sleep(1);
         deleteProductUseCase.execute(productId.getValue());
 
         // Assert
