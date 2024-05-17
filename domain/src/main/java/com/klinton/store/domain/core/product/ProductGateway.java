@@ -11,9 +11,5 @@ public interface ProductGateway {
 
     Optional<Product> getById(ProductID productID);
 
-    Product update(Product product);
-
-    void delete(ProductID productID);
-
     Pagination<Product> getAll(SearchQuery query);
 }
