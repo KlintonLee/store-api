@@ -142,4 +142,52 @@ public class ProductTest {
         assertTrue(product.getUpdatedAt().isAfter(updatedAt));
         assertNull(product.getDeletedAt());
     }
+
+    @Test
+    public void givenAValidProduct_whenCallDeactivate_thenShouldReturnInactiveProduct() throws InterruptedException {
+        // Arrange
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, EXPECTED_ACTIVE);
+        final var createdAt = product.getCreatedAt();
+        final var updatedAt = product.getUpdatedAt();
+
+        // Act
+        Thread.sleep(1);
+        product.deactivate();
+
+        // Assert
+        assertNotNull(product);
+        assertNotNull(product.getId());
+        assertEquals(EXPECTED_NAME, product.getName());
+        assertEquals(EXPECTED_DESCRIPTION, product.getDescription());
+        assertEquals(EXPECTED_QUANTITY, product.getQuantity());
+        assertEquals(EXPECTED_PRICE, product.getPrice());
+        assertFalse(product.isActive());
+        assertEquals(createdAt, product.getCreatedAt());
+        assertTrue(product.getUpdatedAt().isAfter(updatedAt));
+        assertNotNull(product.getDeletedAt());
+    }
+
+    @Test
+    public void givenAnInactiveProduct_whenCallActivate_thenShouldReturnActiveProduct() throws InterruptedException {
+        // Arrange
+        final var product = Product.create(EXPECTED_NAME, EXPECTED_DESCRIPTION, EXPECTED_QUANTITY, EXPECTED_PRICE, false);
+        final var createdAt = product.getCreatedAt();
+        final var updatedAt = product.getUpdatedAt();
+
+        // Act
+        Thread.sleep(1);
+        product.activate();
+
+        // Assert
+        assertNotNull(product);
+        assertNotNull(product.getId());
+        assertEquals(EXPECTED_NAME, product.getName());
+        assertEquals(EXPECTED_DESCRIPTION, product.getDescription());
+        assertEquals(EXPECTED_QUANTITY, product.getQuantity());
+        assertEquals(EXPECTED_PRICE, product.getPrice());
+        assertTrue(product.isActive());
+        assertEquals(createdAt, product.getCreatedAt());
+        assertTrue(product.getUpdatedAt().isAfter(updatedAt));
+        assertNull(product.getDeletedAt());
+    }
 }
