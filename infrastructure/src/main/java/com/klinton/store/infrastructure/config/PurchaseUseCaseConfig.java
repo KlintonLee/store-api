@@ -47,7 +47,7 @@ public class PurchaseUseCaseConfig {
 
     @Bean
     public GetPurchaseByIdUseCase getPurchaseByIdUseCase() {
-        return new DefaultGetPurchaseByIdUseCase(purchaseGateway);
+        return new DefaultGetPurchaseByIdUseCase(purchaseGateway, customerGateway, addressGateway);
     }
 
     @Bean
