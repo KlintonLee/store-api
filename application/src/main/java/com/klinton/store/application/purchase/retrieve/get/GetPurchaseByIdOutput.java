@@ -1,5 +1,7 @@
 package com.klinton.store.application.purchase.retrieve.get;
 
+import com.klinton.store.domain.core.address.Address;
+import com.klinton.store.domain.core.customer.Customer;
 import com.klinton.store.domain.core.purchase.Purchase;
 import com.klinton.store.domain.core.purchase.PurchaseStatus;
 
@@ -7,8 +9,8 @@ import java.time.Instant;
 
 public record GetPurchaseByIdOutput(
         String id,
-        String customerId,
-        String addressId,
+        Customer customer,
+        Address address,
         Instant purchaseDate,
         double totalPrice,
         String paymentMethod,
@@ -16,11 +18,11 @@ public record GetPurchaseByIdOutput(
         Instant updatedAt
 ) {
 
-    public static GetPurchaseByIdOutput from(final Purchase purchase) {
+    public static GetPurchaseByIdOutput from(final Purchase purchase, final Customer customer, final Address address) {
         return new GetPurchaseByIdOutput(
                 purchase.id(),
-                purchase.customerId(),
-                purchase.addressId(),
+                customer,
+                address,
                 purchase.purchaseDate(),
                 purchase.totalPrice(),
                 purchase.paymentMethod(),
