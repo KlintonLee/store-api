@@ -51,6 +51,15 @@ public class Cart extends ValueObject {
         return new Cart(id, customerId, productId, quantity, price);
     }
 
+    public Cart update(
+            final int quantity,
+            final double price
+    ) {
+        this.quantity = quantity;
+        this.price = price;
+        return this;
+    }
+
     public String id() {
         return id;
     }
