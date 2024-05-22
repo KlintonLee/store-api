@@ -11,7 +11,11 @@ import java.util.stream.Collectors;
 public class Utils {
 
     public static <T> Supplier<NotFoundException> notFound(Identifier anId, Class<T> clazz) {
-        return () -> new NotFoundException("%s with ID %s was not found.".formatted(clazz.getSimpleName(), anId.getValue()));
+        return notFound(anId.getValue(), clazz);
+    }
+
+    public static <T> Supplier<NotFoundException> notFound(String anId, Class<T> clazz) {
+        return () -> new NotFoundException("%s with ID %s was not found.".formatted(clazz.getSimpleName(), anId));
     }
 
     public static String mountErrorMessage(Notification notification) {
