@@ -2,6 +2,7 @@ package com.klinton.store.infrastructure.cart.api;
 
 import com.klinton.store.infrastructure.cart.dto.CreateCartDto;
 import com.klinton.store.infrastructure.cart.dto.UpdateCartDto;
+import com.klinton.store.infrastructure.cart.presenter.GetCartsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/cart")
 @Tag(name = "Cart")
@@ -35,7 +38,7 @@ public interface CartApi {
             @ApiResponse(responseCode = "200", description = "Listed successfully"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
-    GetCartsResponse getCartByCustomerId(String id);
+    List<GetCartsResponse> getCartByCustomerId(String id);
 
     @PutMapping(
             value = "{id}",
